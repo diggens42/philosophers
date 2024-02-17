@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:07:33 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/15 20:14:21 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/16 20:26:24 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,27 @@ void	check_input(char **argv)
 {
 	int	i;
 	int	j;
+	int	len;
 
 	i = 0;
 	while (argv[i] != NULL)
 	{
 		j = 0;
-		while (argv[i][j] == ' ' || argv[i][j] == '\t')
+		while (ft_isspace(argv[i][j]))
 			j++;
-		if (argv[i][j] < '0' || argv[i][j] > '9')
+		if (argv[i][j] == '+')
+			j++;
+		if (argv[i][j] == '-')
+			ft_error("No negative integers");
+		if (!(ft_isdigit(argv[i][j])))
 			ft_error("Wrong input");
+		while(ft_isdigit(argv[i][j]))
+		{
+			j++;
+			len++;
+		}
+		if (len > 10)
+			ft_error("Input bigger than INT MAX");
 		i++;
 	}
 }

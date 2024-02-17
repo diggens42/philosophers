@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/15 20:24:34 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/17 18:12:16 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,24 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	long	amount_philo;
-	long	meals_max;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
+	long	amount_philo;	//av[1]
+	long	time_to_die;	//av[2]
+	long	time_to_eat;	//av[3]
+	long	time_to_sleep;	//av[4]
+	long	meals_max;		//av[5]
+	bool	stop;
 	t_fork	*forks;
 	t_philo	*philos;
 }	t_table;
 
 //ft
 void	check_input(char **argv);
+void	init(t_table *table, char **argv);
 
 //util
-void	ft_error(char **str);
+void	ft_error(char *error_msg);
 long	ft_atol(const char *s);
+bool	ft_isspace(char c);
+bool	ft_isdigit(char c);
 
 #endif
