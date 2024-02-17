@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 18:12:16 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/17 19:35:56 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_table
 	long	time_to_die;	//av[2]
 	long	time_to_eat;	//av[3]
 	long	time_to_sleep;	//av[4]
-	long	meals_max;		//av[5]
+	long	max_meals;		//av[5]
 	bool	stop;
 	t_fork	*forks;
 	t_philo	*philos;
