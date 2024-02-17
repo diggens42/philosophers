@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 18:35:18 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/15 20:19:11 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/17 21:05:30 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int main(int argc, char **argv)
 {
 	t_table	table;
 	if (argc < 5 || argc > 6)
-		return (1);
-	check_input(argv); // check input
-						// init
-	
+		ft_error("Too few / too many arguments");
+	check_input(argv);
+	init(&table, argv);
 }

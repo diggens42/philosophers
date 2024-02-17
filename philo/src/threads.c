@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 19:07:33 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 20:54:46 by fwahl            ###   ########.fr       */
+/*   Created: 2024/02/17 20:24:48 by fwahl             #+#    #+#             */
+/*   Updated: 2024/02/17 20:59:15 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	check_input(char **argv)
+
+void	*routine()
+{
+	return(NULL);
+}
+
+void	start_sim(t_table *table)
 {
 	int	i;
-	int	j;
-	int	len;
-
-	len = 0;
-	i = 0;
-	while (argv[++i] != NULL)
+	
+	if (table->max_meals == 0)
+		return ;
+	// else if (table->amount_philo == 1)
+	// 	one_philo();	//TODO edgecase
+	else
 	{
-		j = 0;
-		while (ft_isspace(argv[i][j]))
-			j++;
-		if (argv[i][j] == '+')
-			j++;
-		if (argv[i][j] == '-')
-			ft_error("No negative integers");
-		if (!(ft_isdigit(argv[i][j])))
-			ft_error("Wrong input");
-		while(ft_isdigit(argv[i][j]))
+		i = 0;
+		while (i < table->amount_philo)
 		{
-			j++;
-			len++;
+			pthread_create(&table->philos[i].thread_id, NULL, &routine, &table->philos[i]);
+			i++;
 		}
-		if (len > 10)
-			ft_error("Input bigger than INT MAX");
 	}
 }

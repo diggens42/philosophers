@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:07:09 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 19:38:50 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/17 20:57:48 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void init_forks(t_table *table)
 	i = 0;
 	while (i < table->amount_philo)
 	{
-		pthread_mutex_init(&table->forks[i], NULL);
+		pthread_mutex_init(&table->forks[i].fork, NULL);
 		table->forks[i].id = i + 1;
 		i++;
 	}

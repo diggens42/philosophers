@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:08:03 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 17:18:15 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/17 20:59:40 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ long	ft_atol(const char *s)
 
 bool	ft_isspace(char c)
 {
-	if (c >= 9 && c <= 13 || c == 32)
+	if ((c >= 9 && c <= 13) || c == 32)
 		return (true);
 	return(false);
 }

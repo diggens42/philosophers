@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 19:35:56 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/17 20:34:22 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_philo
 	int			meals_eaten;
 	long		time_last_meal;
 	bool		is_full;
-	pthread_t	thread_num;
+	pthread_t	thread_id;
 	t_fork		*fork_right;
 	t_fork		*fork_left;	
 }	t_philo;
