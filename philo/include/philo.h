@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 20:34:22 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/18 22:05:14 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_philo
 	int			meals_eaten;
 	long		time_last_meal;
 	bool		is_full;
-	pthread_t	thread_id;
+	pthread_t	thread;
 	t_fork		*fork_right;
 	t_fork		*fork_left;	
 }	t_philo;
@@ -53,6 +53,7 @@ typedef struct s_table
 //ft
 void	check_input(char **argv);
 void	init(t_table *table, char **argv);
+void	start_sim(t_table *table);
 
 //util
 void	ft_error(char *error_msg);

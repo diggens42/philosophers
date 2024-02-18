@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:24:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/18 18:01:36 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/18 22:14:58 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,29 @@ void	*routine()
 
 void	start_sim(t_table *table)
 {
+	t_philo *philo;
 	int	i;
 	
+	i = 0;
 	if (table->max_meals == 0)
 		return ;
 	// else if (table->amount_philo == 1)
 	// 	one_philo();	//TODO edgecase
 	else
 	{
+		while (i < table->amount_philo)
+		{
+			philo = &table->philos[i];
+			pthread_create(&philo->thread, NULL, &routine, &table->philos[i]);
+			printf("Thread %d created\n", i + 1);
+			i++;
+		}
 		i = 0;
 		while (i < table->amount_philo)
 		{
-			pthread_create(&table->philos[i].thread_id, NULL, &routine, &table->philos[i]);
+			philo = &table->philos[i];
+			pthread_join(philo->thread, NULL);
+			printf("Thread %d finished\n", i + 1);
 			i++;
 		}
 	}

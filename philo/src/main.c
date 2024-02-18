@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 18:35:18 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 21:05:30 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/18 22:04:08 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int main(int argc, char **argv)
 		ft_error("Too few / too many arguments");
 	check_input(argv);
 	init(&table, argv);
+	start_sim(&table);
 }
