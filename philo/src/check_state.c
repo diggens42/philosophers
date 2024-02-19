@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 18:35:18 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/19 19:51:12 by fwahl            ###   ########.fr       */
+/*   Created: 2024/02/19 17:25:20 by fwahl             #+#    #+#             */
+/*   Updated: 2024/02/19 17:38:13 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int main(int argc, char **argv)
+void	check_saturation(t_table *table)
 {
-	t_table	table;
-	if (argc < 5 || argc > 6)
-		ft_error("Too few / too many arguments");
-	check_input(argv);
-	init(&table, argv);
-	start_sim(&table);
-	return (EXIT_SUCCESS);
+	t_philo	*philo;
+	int		i;
+	int		philos_full;
+
+	i = 0;
+	while (&table->philos[i] != NULL)
+	{
+		philo = &table->philos[i];
+		if (philo->meals_eaten == table->max_meals)
+			philos_full++;
+		i++;
+	}
+	if (philos_full == table->amount_philo)
+		table->stop = true;
+	if (table->stop == true)
+		exit_cleanup();
 }

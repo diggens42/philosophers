@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/18 22:05:14 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/19 20:00:56 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct s_fork
 {
-	pthread_mutex_t	fork;
+	pthread_mutex_t	*fork;
 	int				id;
 }	t_fork;
 
@@ -45,7 +45,11 @@ typedef struct s_table
 	long	time_to_eat;	//av[3]
 	long	time_to_sleep;	//av[4]
 	long	max_meals;		//av[5]
+	long	start;
 	bool	stop;
+	bool	is_deadge;
+	pthread_mutex_t	*print;
+	pthread_mutex_t	*eat;
 	t_fork	*forks;
 	t_philo	*philos;
 }	t_table;
@@ -60,5 +64,7 @@ void	ft_error(char *error_msg);
 long	ft_atol(const char *s);
 bool	ft_isspace(char c);
 bool	ft_isdigit(char c);
+long	get_time_ms(void);
+long	get_time_us(void);
 
 #endif

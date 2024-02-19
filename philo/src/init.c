@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:07:09 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 20:57:48 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/19 19:58:54 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void init_philos(t_table *table)
 		philo = &table->philos[i];
 		philo->id = i + 1;
 		philo->meals_eaten = 0;
-		philo->time_last_meal = 0;
+		philo->time_last_meal = get_time_ms();
 		philo->is_full = false;
 		i++;
 	}

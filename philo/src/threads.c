@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:24:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/18 22:14:58 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/19 20:19:54 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 
 void	*routine()
 {
+	// take forks
+	// eat
+	// drop forks
+	// sleep
+	// think
 	return(NULL);
 }
 
@@ -39,16 +44,31 @@ void	start_sim(t_table *table)
 		{
 			philo = &table->philos[i];
 			pthread_create(&philo->thread, NULL, &routine, &table->philos[i]);
-			printf("Thread %d created\n", i + 1);
+			// printf("Thread %d created\n", i + 1);
 			i++;
 		}
+		table->start = ft_get_time();
 		i = 0;
 		while (i < table->amount_philo)
 		{
 			philo = &table->philos[i];
 			pthread_join(philo->thread, NULL);
-			printf("Thread %d finished\n", i + 1);
+			// printf("Thread %d finished\n", i + 1);
 			i++;
 		}
 	}
+}
+void	eat(t_table *table, int idx)
+{	
+	take_forks(table);
+	pthread_mutex_lock(table->eat);
+	table->philos[idx].time_last_meal = get_time_ms();
+	table->philos[idx].meals_eaten++;
+	pthread_mutex_unlock(table->eat);
+}
+
+void	take_forks(t_table *table)
+{
+	t_philo	*philo;
+	
 }

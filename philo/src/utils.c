@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:08:03 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 20:59:40 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/19 20:21:18 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,34 @@ bool	ft_isdigit(char c)
 	if (c>= '0' && c <= '9')
 		return (true);
 	return (false);
+}
+
+long	get_time_ms(void)
+{
+	struct	timeval time_value;
+
+	if (gettimeofday(&time_value, NULL) == -1)
+		ft_error("Get time failure");
+	return ((time_value.tv_sec * 1000) + (time_value.tv_usec / 1000));
+}
+long	get_time_us(void)
+{
+	struct	timeval time_value;
+
+	if (gettimeofday(&time_value, NULL) == -1)
+		ft_error("Get time failure");
+	return ((time_value.tv_sec * 1000000) + (time_value.tv_usec));
+}
+
+void	ft_usleep(t_table *table, long microsec)
+{
+	long	start;
+
+	start = get_time_us();
+	while (get_time_us() - start < microsec)
+	{
+		if (table->stop == true)
+			return ;
+		
+	}
 }
