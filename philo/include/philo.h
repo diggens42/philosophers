@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 19:39:29 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 21:26:18 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_philo
 	int				meals_eaten;
 	long			time_last_meal;
 	bool			is_full;
+	bool			is_deadge;
 	pthread_t		thread;
 	t_table			*table;
 	t_fork			*fork_right;
@@ -51,9 +52,9 @@ typedef struct s_table
 	suseconds_t		time_to_sleep;	//av[4]
 	suseconds_t		start;
 	bool			stop;
-	bool			is_deadge;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*eat;
+	pthread_t		*overseer;
 	t_fork			*forks;
 	t_philo			*philos;
 }	t_table;
@@ -63,9 +64,10 @@ void	check_input(char **argv);
 void	init(t_table *table, char **argv);
 void	start_sim(t_table *table);
 void	eat(t_philo *philo);
+void	print_action(t_philo *philo, char *str);
 void	take_forks(t_philo *philo);
 void	drop_forks(t_philo *philo);
-void	print_action(t_philo *philo, char *str);
+
 //util
 void	ft_error(char *error_msg);
 long	ft_atol(const char *s);

@@ -11,7 +11,7 @@ vpath %.c $(SRC_FOLDER)
 
 HEADER		= philo.h
 
-SRCS		= main.c check_input.c init.c threads.c utils.c
+SRCS		= main.c check_input.c init.c threads.c utils.c events.c
 
 OBJS		= $(SRCS:%.c=%.o)
 
