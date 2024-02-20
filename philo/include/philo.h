@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 19:03:00 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 19:39:29 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_fork
 	pthread_mutex_t	*fork;
 	int				id;
 }	t_fork;
+
+typedef struct s_table t_table;
 
 typedef struct s_philo
 {
@@ -60,7 +62,10 @@ typedef struct s_table
 void	check_input(char **argv);
 void	init(t_table *table, char **argv);
 void	start_sim(t_table *table);
-
+void	eat(t_philo *philo);
+void	take_forks(t_philo *philo);
+void	drop_forks(t_philo *philo);
+void	print_action(t_philo *philo, char *str);
 //util
 void	ft_error(char *error_msg);
 long	ft_atol(const char *s);

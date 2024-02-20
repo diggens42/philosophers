@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:24:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 19:09:01 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 19:49:29 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	*routine(void *arg)
 	t_philo	*philo;
 	
 	philo = (t_philo *) arg;
-	// take forks
-	// eat
-	// drop forks
-	// sleep
+	take_forks(philo);
+	eat(philo);
+	drop_forks(philo);
+	print_action(philo, "is sleeping");
+	usleep(philo->table->time_to_sleep);
 	// think
+	return (NULL); // ?
 }
 
 void	start_sim(t_table *table)
@@ -49,7 +51,7 @@ void	start_sim(t_table *table)
 			// printf("Thread %d created\n", i + 1);
 			i++;
 		}
-		table->start = ft_get_time();
+		table->start = get_time_ms();
 		i = 0;
 		while (i < table->amount_philo)
 		{
@@ -82,17 +84,42 @@ void	print_action(t_philo *philo, char *str)
 		return ;
 	}
 	time = get_time_ms() - philo->table->start;
-	printf("%ld Philo %ld %s ", time, philo->id, str);
+	printf("%d Philo %d %s ", time, philo->id, str);
 	pthread_mutex_unlock(philo->table->print);
 }
 
 void	take_forks(t_philo *philo)
 {
-	t_philo	*philo;
-	
+	if (philo->id % 2 != 0)
+	{
+		pthread_mutex_lock(philo->fork_left->fork);
+		print_action(philo, "takes the left fork");
+		pthread_mutex_lock(philo->fork_right->fork);
+		print_action(philo, "takes the right fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->fork_right->fork);
+		print_action(philo, "takes the right fork");
+		pthread_mutex_lock(philo->fork_left->fork);
+		print_action(philo, "takes the left fork");
+	}
 }
 
 void	drop_forks(t_philo *philo)
 {
-	
+		if (philo->id % 2 != 0)
+	{
+		pthread_mutex_unlock(philo->fork_left->fork);
+		print_action(philo, "drops the left fork");
+		pthread_mutex_unlock(philo->fork_right->fork);
+		print_action(philo, "drops the right fork");
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->fork_right->fork);
+		print_action(philo, "drops the right fork");
+		pthread_mutex_unlock(philo->fork_left->fork);
+		print_action(philo, "drops the left fork");
+	}
 }
