@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:08:03 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/19 20:21:18 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 16:24:50 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ long	get_time_us(void)
 	return ((time_value.tv_sec * 1000000) + (time_value.tv_usec));
 }
 
-void	ft_usleep(t_table *table, long microsec)
-{
-	long	start;
+// void	ft_usleep(long microsec)
+// {
+// 	long	start;
 
-	start = get_time_us();
-	while (get_time_us() - start < microsec)
-	{
-		if (table->stop == true)
-			return ;
+// 	start = get_time_us();
+// 	while (get_time_us() - start < microsec)
+// 	{
+// 		if (table->stop == true)
+// 			return ;
 		
-	}
-}
+// 	}
+// }

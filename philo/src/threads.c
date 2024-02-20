@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:24:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/19 20:19:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 19:09:01 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@
 // start_routine: function pointer to the fucntion that will be executed by the new thread. takes void* and returns void*. entry point for the new thread
 // arg: pointer to the arg that will be passed to start_Routine when thread is created.
 
-void	*routine()
+void	*routine(void *arg)
 {
+	t_philo	*philo;
+	
+	philo = (t_philo *) arg;
 	// take forks
 	// eat
 	// drop forks
 	// sleep
 	// think
-	return(NULL);
 }
 
 void	start_sim(t_table *table)
@@ -43,7 +45,7 @@ void	start_sim(t_table *table)
 		while (i < table->amount_philo)
 		{
 			philo = &table->philos[i];
-			pthread_create(&philo->thread, NULL, &routine, &table->philos[i]);
+			pthread_create(&philo->thread, NULL, &routine, (void *)philo);
 			// printf("Thread %d created\n", i + 1);
 			i++;
 		}
@@ -58,17 +60,39 @@ void	start_sim(t_table *table)
 		}
 	}
 }
-void	eat(t_table *table, int idx)
+void	eat(t_philo *philo)
 {	
-	take_forks(table);
-	pthread_mutex_lock(table->eat);
-	table->philos[idx].time_last_meal = get_time_ms();
-	table->philos[idx].meals_eaten++;
-	pthread_mutex_unlock(table->eat);
+	take_forks(philo);
+	pthread_mutex_lock(philo->table->eat);
+	philo->time_last_meal = get_time_ms();
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->table->eat);
+	print_action(philo, "is eating");
+	usleep(philo->table->time_to_eat);
+	drop_forks(philo);
+}
+void	print_action(t_philo *philo, char *str)
+{
+	suseconds_t	time;
+
+	pthread_mutex_lock(philo->table->print);
+	if (philo->table->stop == true)
+	{
+		pthread_mutex_unlock(philo->table->print);
+		return ;
+	}
+	time = get_time_ms() - philo->table->start;
+	printf("%ld Philo %ld %s ", time, philo->id, str);
+	pthread_mutex_unlock(philo->table->print);
 }
 
-void	take_forks(t_table *table)
+void	take_forks(t_philo *philo)
 {
 	t_philo	*philo;
+	
+}
+
+void	drop_forks(t_philo *philo)
+{
 	
 }

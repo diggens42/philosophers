@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:07:09 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/19 19:58:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 19:04:29 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	init_table(t_table *table, char **argv)
 {
 	table->amount_philo = ft_atol(argv[1]);
-	table->time_to_die = ft_atol(argv[2]) * 1000;
-	table->time_to_eat = ft_atol(argv[3]) * 1000;
-	table->time_to_sleep = ft_atol(argv[4]) * 1000;
+	table->time_to_die = (suseconds_t)ft_atol(argv[2]) * 1000;
+	table->time_to_eat = (suseconds_t)ft_atol(argv[3]) * 1000;
+	table->time_to_sleep = (suseconds_t)ft_atol(argv[4]) * 1000;
 	if (argv[5] != NULL)
 		table->max_meals = ft_atol(argv[5]);
 	else
@@ -48,6 +48,7 @@ static void init_philos(t_table *table)
 		philo->meals_eaten = 0;
 		philo->time_last_meal = get_time_ms();
 		philo->is_full = false;
+		philo->table = table;
 		i++;
 	}
 }

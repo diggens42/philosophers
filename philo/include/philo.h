@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/19 20:00:56 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/20 19:03:00 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <sys/time.h>
+#include <sys/types.h>
 #include <limits.h>
 
 typedef struct s_fork
@@ -29,29 +30,30 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int			id;
-	int			meals_eaten;
-	long		time_last_meal;
-	bool		is_full;
-	pthread_t	thread;
-	t_fork		*fork_right;
-	t_fork		*fork_left;	
+	int				id;
+	int				meals_eaten;
+	long			time_last_meal;
+	bool			is_full;
+	pthread_t		thread;
+	t_table			*table;
+	t_fork			*fork_right;
+	t_fork			*fork_left;	
 }	t_philo;
 
 typedef struct s_table
 {
-	long	amount_philo;	//av[1]
-	long	time_to_die;	//av[2]
-	long	time_to_eat;	//av[3]
-	long	time_to_sleep;	//av[4]
-	long	max_meals;		//av[5]
-	long	start;
-	bool	stop;
-	bool	is_deadge;
+	long			amount_philo;	//av[1]
+	long			max_meals;		//av[5]
+	suseconds_t		time_to_die;	//av[2]
+	suseconds_t		time_to_eat;	//av[3]
+	suseconds_t		time_to_sleep;	//av[4]
+	suseconds_t		start;
+	bool			stop;
+	bool			is_deadge;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*eat;
-	t_fork	*forks;
-	t_philo	*philos;
+	t_fork			*forks;
+	t_philo			*philos;
 }	t_table;
 
 //ft
