@@ -21,7 +21,7 @@ $(NAME):		$(OBJS)
 				$(CC) $(CFLAGS) -o $@ $(OBJS)
 
 debug:
-	$(CC) $(SRCS) -g -o ../debugger/a.out
+	$(CC) $(addprefix $(SRC_FOLDER)/, $(SRCS)) -g -o ../debugger/a.out -lpthread
 
 clean:
 	rm -f $(OBJS)

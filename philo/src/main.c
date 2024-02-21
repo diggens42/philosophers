@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 18:35:18 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/19 19:51:12 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/21 20:37:48 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int main(int argc, char **argv)
 {
-	t_table	table;
+	t_table	*table;
+
+	table = (t_table *)malloc(sizeof(t_table));
 	if (argc < 5 || argc > 6)
-		ft_error("Too few / too many arguments");
+		ft_error("Too few / too many arguments\n");
 	check_input(argv);
-	init(&table, argv);
-	start_sim(&table);
+	init(table, argv);
+	start_sim(table);
 	return (EXIT_SUCCESS);
 }

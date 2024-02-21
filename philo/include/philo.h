@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:29:17 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 21:26:18 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/21 20:24:25 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct s_fork
 {
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	fork;
 	int				id;
 }	t_fork;
 
@@ -52,9 +52,9 @@ typedef struct s_table
 	suseconds_t		time_to_sleep;	//av[4]
 	suseconds_t		start;
 	bool			stop;
-	pthread_mutex_t	*print;
-	pthread_mutex_t	*eat;
-	pthread_t		*overseer;
+	pthread_mutex_t	print;
+	pthread_mutex_t	eat;
+	pthread_t		overseer;
 	t_fork			*forks;
 	t_philo			*philos;
 }	t_table;

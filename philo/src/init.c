@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:07:09 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 21:24:58 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/21 20:25:20 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ static void	init_table(t_table *table, char **argv)
 		|| table->time_to_sleep < 60000)
 		ft_error("Time to die/eat/sleep more than 60ms");
 	table->stop = false;
-	// table->philos = malloc(sizeof(t_philo) * table->amount_philo);
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->amount_philo);
 	// 	//catch malloc error
-	// table->forks = malloc(sizeof(t_fork) * table->amount_philo);
+	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->amount_philo);
 	// 	//catch malloc error
-
+	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->eat, NULL);
 }
 
 static void init_philos(t_table *table)
@@ -55,23 +56,21 @@ static void init_philos(t_table *table)
 
 static void init_forks(t_table *table)
 {
-	t_fork	fork[table->amount_philo];
 	t_philo	*philo;
 	int		i;
 		
 	i = 0;
 	while (i < table->amount_philo)
 	{
-		pthread_mutex_init(table->forks[i].fork, NULL);
+		pthread_mutex_init(&table->forks[i].fork, NULL);
 		table->forks[i].id = i + 1;
 		i++;
 	}
 	i = 0;
 	while (i < table->amount_philo)
 	{
-		fork[i] = table->forks[i];
 		philo = &table->philos[i];
-		philo->fork_right = fork;
+		philo->fork_right = &table->forks[i];
 		if (i == 0)
 			philo->fork_left = &table->forks[table->amount_philo - 1];
 		else

@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:24:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 21:21:28 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/21 21:16:21 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	*routine(void *arg)
 	t_philo	*philo;
 	
 	philo = (t_philo *) arg;
-	take_forks(philo);
-	eat(philo);
-	drop_forks(philo);
-	print_action(philo, "is sleeping");
-	usleep(philo->table->time_to_sleep);
-	// think
+	while (philo->table->stop == false)
+	{
+		take_forks(philo);
+		eat(philo);
+		drop_forks(philo);
+		print_action(philo, "is sleeping");
+		usleep(philo->table->time_to_sleep);
+		print_action(philo, "thinking");
+	}
 	return (NULL); // ?
 }
 
@@ -50,9 +53,9 @@ void	*overseer_routine(void *arg)
 				philos->table->stop = true;
 			i++;
 		}
-		if (philos_full == philos->table->amount_philo)
-			philos->table->stop = true;
-		if (philos->table->stop == true)
+		if (philos_full == philos[0].table->amount_philo)
+			philos[0].table->stop = true;
+		if (philos[0].table->stop == true)
 			exit(EXIT_SUCCESS);
 		
 	}
@@ -64,7 +67,7 @@ void	start_sim(t_table *table)
 	int	i;
 	
 	i = 0;
-	pthread_create(table->overseer, NULL, &overseer_routine, table->philos);
+	pthread_create(&table->overseer, NULL, &overseer_routine, table->philos);
 	if (table->max_meals == 0)
 		return ;
 	// else if (table->amount_philo == 1)
@@ -80,12 +83,15 @@ void	start_sim(t_table *table)
 		}
 		table->start = get_time_ms();
 		i = 0;
-		while (i < table->amount_philo)
-		{
-			philo = &table->philos[i];
-			pthread_join(philo->thread, NULL);
-			// printf("Thread %d finished\n", i + 1);
-			i++;
+		if (table->stop == true)
+		{	
+			while (i < table->amount_philo)
+			{
+				philo = &table->philos[i];
+				pthread_join(philo->thread, NULL);
+				// printf("Thread %d finished\n", i + 1);
+				i++;
+			}
 		}
 	}
 }

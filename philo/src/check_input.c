@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:07:33 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/17 20:54:46 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/21 17:41:24 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	check_input(char **argv)
 	int	j;
 	int	len;
 
-	len = 0;
 	i = 0;
 	while (argv[++i] != NULL)
 	{
+		len = 0;
 		j = 0;
 		while (ft_isspace(argv[i][j]))
 			j++;

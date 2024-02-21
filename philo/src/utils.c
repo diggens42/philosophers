@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:08:03 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/20 16:24:50 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/02/21 21:20:44 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ bool	ft_isdigit(char c)
 long	get_time_ms(void)
 {
 	struct	timeval time_value;
+	long	ms;
 
 	if (gettimeofday(&time_value, NULL) == -1)
 		ft_error("Get time failure");
-	return ((time_value.tv_sec * 1000) + (time_value.tv_usec / 1000));
+	ms = time_value.tv_sec * 1000L + time_value.tv_usec / 1000L;
+	return (ms);
 }
 long	get_time_us(void)
 {
