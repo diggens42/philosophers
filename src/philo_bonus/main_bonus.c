@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 19:15:35 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/14 21:30:28 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/14 21:38:54 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "../../include/philo_bonus.h"
 
 int	main(int argc, char **argv)
 {

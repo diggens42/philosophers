@@ -3,7 +3,7 @@ NAME		= philo
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread -O3
 
-SRC_FOLDER	= src
+SRC_FOLDER	= src src/philo src/philo_bonus
 INC_DIRS	= include
 
 vpath %.h $(INC_DIRS)
