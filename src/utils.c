@@ -5,19 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 19:08:03 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/21 21:20:44 by fwahl            ###   ########.fr       */
+/*   Created: 2024/03/16 19:18:22 by fwahl             #+#    #+#             */
+/*   Updated: 2024/03/17 19:18:39 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	ft_error(char *error_msg)
+bool	ft_isspace(char c)
 {
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (true);
+	return (false);
 }
 
+bool	ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (true);
+	return (false);
+}
 
 long	ft_atol(const char *s)
 {
@@ -44,48 +51,27 @@ long	ft_atol(const char *s)
 	return (sign * result);
 }
 
-bool	ft_isspace(char c)
+void	ft_error(char *error_msg)
 {
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (true);
-	return(false);
+	printf("Error: %s", error_msg);
 }
 
-bool	ft_isdigit(char c)
+suseconds_t	get_time_ms(void)
 {
-	if (c>= '0' && c <= '9')
-		return (true);
-	return (false);
-}
-
-long	get_time_ms(void)
-{
-	struct	timeval time_value;
-	long	ms;
+	struct timeval	time_value;
 
 	if (gettimeofday(&time_value, NULL) == -1)
-		ft_error("Get time failure");
-	ms = time_value.tv_sec * 1000L + time_value.tv_usec / 1000L;
-	return (ms);
+		ft_error("get time error");
+	return ((time_value.tv_sec * 1000LL) + (time_value.tv_usec / 1000));
 }
-long	get_time_us(void)
+
+void	precise_usleep(long milliseconds)
 {
-	struct	timeval time_value;
+	suseconds_t	time_start;
+	suseconds_t	time_end;
 
-	if (gettimeofday(&time_value, NULL) == -1)
-		ft_error("Get time failure");
-	return ((time_value.tv_sec * 1000000) + (time_value.tv_usec));
+	time_start = get_time_ms();
+	time_end = time_start + milliseconds;
+	while (get_time_ms() < time_end)
+		usleep(100);
 }
-
-// void	ft_usleep(long microsec)
-// {
-// 	long	start;
-
-// 	start = get_time_us();
-// 	while (get_time_us() - start < microsec)
-// 	{
-// 		if (table->stop == true)
-// 			return ;
-		
-// 	}
-// }

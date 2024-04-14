@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 19:07:33 by fwahl             #+#    #+#             */
-/*   Updated: 2024/02/21 17:41:24 by fwahl            ###   ########.fr       */
+/*   Created: 2024/03/16 20:49:43 by fwahl             #+#    #+#             */
+/*   Updated: 2024/03/17 17:45:08 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	check_input(char **argv)
+void	check_argv(char **argv)
 {
 	int	i;
 	int	j;
@@ -31,7 +31,7 @@ void	check_input(char **argv)
 			ft_error("No negative integers");
 		if (!(ft_isdigit(argv[i][j])))
 			ft_error("Wrong input");
-		while(ft_isdigit(argv[i][j]))
+		while (ft_isdigit(argv[i][j]))
 		{
 			j++;
 			len++;
