@@ -6,11 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:18:22 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 19:18:39 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
 bool	ft_isspace(char c)
 {

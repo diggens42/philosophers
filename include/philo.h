@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:28:59 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 20:12:31 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/14 21:00:23 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <limits.h>
+# include <stdint.h>
 
 # define PHILOS_MAX 200
 
@@ -36,11 +37,9 @@ typedef struct s_info
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			n_meals_to_eat;
-	int				n_philos_full;
 	bool			stop_sim;
 	pthread_mutex_t	sim;
 	pthread_mutex_t	eat;
-	pthread_mutex_t	full;
 	pthread_mutex_t	print;
 }		t_info;
 
@@ -86,5 +85,5 @@ bool		ft_isspace(char c);
 bool		ft_isdigit(char c);
 void		ft_error(char *error_msg);
 void		precise_usleep(long milliseconds);
-
+uint32_t 	ft_rand(t_philo *philo);
 #endif

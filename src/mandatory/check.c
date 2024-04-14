@@ -6,11 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:49:43 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 17:45:08 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
 void	check_argv(char **argv)
 {

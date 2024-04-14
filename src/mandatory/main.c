@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 20:07:57 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 20:14:00 by fwahl            ###   ########.fr       */
+/*   Created: 2024/03/16 19:15:35 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
-void	cleanup(t_table *table)
+int	main(int argc, char **argv)
 {
-	int	i;
-	pthread_mutex_destroy(&table->info.sim);
-	pthread_mutex_destroy(&table->info.eat);
-	pthread_mutex_destroy(&table->info.full);
-	pthread_mutex_destroy(&table->info.print);
-	i = 0;
-	while (i < table->info.n_philos)
+	t_table	table;
+
+	if (argc < 5 || argc > 6)
 	{
-		pthread_mutex_destroy(&table->philos[i].last_meal);
-		i++;
+		ft_error("too few / too many args");
+		return (0);
 	}
+	check_argv(argv);
+	init(&table, argv);
+	simulation(&table);
+	cleanup(&table);
+	return (0);
 }

@@ -6,30 +6,40 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:03:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 20:38:14 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
 static bool	is_full(t_philo *philo)
 {
 	if (philo->info->n_meals_to_eat > 0
 		&& philo->n_meals_eaten >= philo->info->n_meals_to_eat)
-	{
-		// philo->is_full = true;
-		print_action(philo, "is full\n");
-		pthread_mutex_lock(&philo->info->full);
-		philo->info->n_philos_full++;
-		pthread_mutex_unlock(&philo->info->full);
 		return (true);
-	}
 	return (false);
 }
 
 static void	take_forks(t_philo *philo)
 {
+	bool	pick_left_first;
+
 	if (philo->id % 2 != 0)
+	{
+		if (philo->n_meals_eaten % 2 == 0)
+			pick_left_first = true;
+		else
+			pick_left_first = false;
+	}
+	else
+	{
+		if (philo->n_meals_eaten % 2 == 0)
+			pick_left_first = false;
+		else
+			pick_left_first = true;
+	}
+
+	if (pick_left_first)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_action(philo, "has taken a fork\n");
@@ -53,6 +63,8 @@ static void	drop_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
+	if (philo->info->stop_sim)
+		return ;
 	pthread_mutex_lock(&philo->info->sim);
 	if (philo->info->stop_sim)
 	{
@@ -67,7 +79,8 @@ void	eat(t_philo *philo)
 	philo->time_last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->last_meal);
 	philo->n_meals_eaten++;
-	philo->is_full = is_full(philo);
+	if (philo->is_full == false)
+		philo->is_full = is_full(philo);
 	pthread_mutex_unlock(&philo->info->eat);
 	precise_usleep(philo->info->time_to_eat);
 	drop_forks(philo);

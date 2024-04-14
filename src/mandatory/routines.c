@@ -6,11 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:40:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 20:18:11 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
 static void	check_death(t_table *table)
 {
@@ -25,7 +25,7 @@ static void	check_death(t_table *table)
 		pthread_mutex_lock(&table->philos[i].last_meal);
 		diff = get_time_ms() - table->philos[i].time_last_meal;
 		pthread_mutex_unlock(&table->philos[i].last_meal);
-		if (diff > table->info.time_to_die && !table->philos[i].is_full)
+		if (diff > table->info.time_to_die)
 		{
 			print_action(&table->philos[i], "has died\n");
 			pthread_mutex_lock(&table->info.sim);
@@ -39,13 +39,23 @@ static void	check_death(t_table *table)
 
 static void	check_full(t_table *table)
 {
-	pthread_mutex_lock(&table->info.full);
-	if (table->info.n_philos_full == table->info.n_philos)
+	int		philos_full;
+	int		i;
+
+	philos_full = 0;
+	i = 0;
+	while (i < table->info.n_philos)
 	{
-		table->info.stop_sim = true;
-		printf("All Philos are full and leave the table");
+		if (table->philos[i].is_full == true)
+			philos_full++;
+		i++;
 	}
-	pthread_mutex_unlock(&table->info.full);
+	if (philos_full == table->info.n_philos)
+	{
+		pthread_mutex_lock(&table->info.sim);
+		table->info.stop_sim = true;
+		pthread_mutex_unlock(&table->info.sim);
+	}
 }
 
 void	*routine(void *arg)
@@ -53,19 +63,11 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (true)
+	if (philo->id % 2 == 0)
+		precise_usleep(10);
+	while (!philo->info->stop_sim)
 	{
-		if (philo->info->stop_sim == true)
-		{
-			print_action(philo, "stops participation\n");
-			break ;
-		}
 		eat(philo);
-		if (philo->is_full)
-		{
-			print_action(philo, "is full\n");
-			break ;
-		}
 		print_action(philo, "is sleeping\n");
 		precise_usleep(philo->info->time_to_sleep);
 		print_action(philo, "is thinking\n");

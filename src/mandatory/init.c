@@ -6,11 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:24:25 by fwahl             #+#    #+#             */
-/*   Updated: 2024/03/17 18:59:39 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/14 21:17:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
 static void	init_info_mutexes(t_info *info)
 {
@@ -18,8 +18,6 @@ static void	init_info_mutexes(t_info *info)
 		ft_error("error sim mutex init");
 	if (pthread_mutex_init(&info->eat, NULL) != 0)
 		ft_error("error eat mutex init");
-	if (pthread_mutex_init(&info->full, NULL) != 0)
-		ft_error("error full mutex init");
 	if (pthread_mutex_init(&info->print, NULL) != 0)
 		ft_error("error print mutex init");
 }
@@ -27,7 +25,7 @@ static void	init_info_mutexes(t_info *info)
 static void	init_info(t_table *table, char **argv)
 {
 	t_info	*info;
-	
+
 	info = &table->info;
 	info->n_philos = ft_atol(argv[1]);
 	info->time_to_die = ft_atol(argv[2]);
@@ -42,7 +40,6 @@ static void	init_info(t_table *table, char **argv)
 	if (info->time_to_die < 60 || info->time_to_eat < 60
 		|| info->time_to_sleep < 60)
 		ft_error("time to die/eat/sleep must be more than 60ms");
-	info->n_philos_full = 0;
 	info->stop_sim = false;
 	init_info_mutexes(info);
 }
