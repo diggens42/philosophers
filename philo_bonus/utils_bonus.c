@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 19:18:22 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 22:44:44 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/14 22:05:44 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/16 01:08:07 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "philo_bonus.h"
 
 static bool	ft_isspace(char c)
 {
@@ -49,12 +49,6 @@ long	ft_atol(const char *s)
 		s++;
 	}
 	return (sign * result);
-}
-
-void	ft_error(char *error_msg)
-{
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
 }
 
 suseconds_t	get_time_ms(void)

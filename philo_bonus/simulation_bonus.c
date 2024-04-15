@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   simulation_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 19:15:35 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:27:24 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/16 00:13:12 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/16 01:07:36 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "philo_bonus.h"
 
-int	main(int argc, char **argv)
+void	simulation_bonus(t_table *table)
 {
-	t_table	table;
+	pid_t	pid;
+	int		i;
 
-	if (argc < 5 || argc > 6)
+	i = 0;
+	while (i < table->info.n_philos)
 	{
-		ft_error("too few / too many args");
-		return (0);
+		pid = fork();
+		if (pid == 0)
+		{
+			philo_routine(&table->philos[i]);
+			exit(EXIT_SUCCESS);
+		}
+		else if (pid < 0)
+			ft_error("fork error");
+		i++;
 	}
-	check_argv(argv);
-	init(&table, argv);
-	simulation(&table);
-	cleanup(&table);
-	return (0);
+	monitor_thread(table);
+	i = 0;
+	while (i < table->info.n_philos)
+	{
+		waitpid(-1, NULL, 0);
+		i++;
+	}
 }

@@ -6,11 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 00:10:16 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 01:08:07 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo_bonus.h"
+#include "philo_bonus.h"
 
 static sem_t *ft_sem_open(char *name, int amount)
 {
