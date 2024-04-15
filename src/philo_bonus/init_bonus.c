@@ -6,11 +6,20 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 22:49:41 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 00:10:16 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo_bonus.h"
+
+static sem_t *ft_sem_open(char *name, int amount)
+{
+	sem_t	*sem;
+
+	sem = sem_open(name, O_CREAT | O_EXCL, 0644, amount);
+	if (sem == SEM_FAILED)
+		ft_error_semopen("error sem_open");
+}
 
 static void	init_info_bonus(t_table *table, char **argv)
 {
@@ -31,6 +40,8 @@ static void	init_info_bonus(t_table *table, char **argv)
 		|| info->time_to_sleep < 60)
 		ft_error("time to die/eat/sleep must be more than 60ms");
 	info->stop_sim = false;
+	info->sim = ft_sem_open("/sim", 1);
+	info->print = ft_sem_open("/print", 1);
 }
 
 static void	init_philo_bonus(t_table *table)
@@ -47,19 +58,14 @@ static void	init_philo_bonus(t_table *table)
 		philo->is_dead = false;
 		philo->is_full = false;
 		philo->info = &table->info;
+		philo->last_meal = ft_sem_open("/last_meal", 1);
 		i++;
 	}
 }
 
 static void	init_forks_bonus(t_table *table)
 {
-	table->forks = sem_open("/forks", O_CREAT | O_EXCL, 0644, table->info.n_philos);
-	if (table->forks == SEM_FAILED)
-	{
-		sem_unlink("/forks");
-		ft_error("sem_open error");
-		exit(EXIT_FAILURE);
-	}
+	table->forks = ft_sem_open("/forks", table->info.n_philos);
 }
 
 
@@ -68,9 +74,4 @@ void	init_bonus(t_table *table, char **argv)
 	init_info_bonus(table, argv);
 	init_philo_bonus(table);
 	init_forks_bonus(table);
-}
-
-void	cleanup_semaphores(void)
-{
-	sem_unlink("/forks");
 }

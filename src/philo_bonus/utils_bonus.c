@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 22:05:44 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 22:44:28 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 23:36:41 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ long	ft_atol(const char *s)
 void	ft_error(char *error_msg)
 {
 	printf("Error: %s", error_msg);
+	exit(EXIT_FAILURE);
 }

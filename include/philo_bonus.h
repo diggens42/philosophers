@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 22:47:29 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 00:05:03 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,19 @@ typedef struct s_info
 	long			time_to_sleep;
 	long			n_meals_to_eat;
 	bool			stop_sim;
+	sem_t			*sim;
+	sem_t			*print;
 }		t_info;
 
 typedef struct s_philo
 {
 	int				id;
-	int				n_meals_eaten; //This might need to be tracked differently if required across processes
-	bool			is_dead;    //Difficult to manage without shared memory, consider design implications
-	bool			is_full; //Difficult to manage without shared memory, consider design implications
+	int				n_meals_eaten;
+	bool			is_dead;
+	bool			is_full;
 	suseconds_t		time_last_meal;
 	suseconds_t		time_start_routine;
+	sem_t			*last_meal;
 	t_info			*info;
 }		t_philo;
 
@@ -65,5 +68,7 @@ void	init_bonus(t_table *table, char **argv);
 //utils
 
 void	ft_error(char *error_msg);
+void	ft_error_semopen(char *error_msg);
 long	ft_atol(const char *s);
+
 #endif

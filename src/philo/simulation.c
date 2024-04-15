@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:56:44 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:27:24 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 23:17:59 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static void	start_monitor_thread(t_table *table)
 	if (pthread_create(&table->monitor_thread, NULL, monitor, table) != 0)
 	{
 		ft_error("failed thread creation for monitor");
-		return ;
+		join_philo_threads(table);
+		cleanup(table);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -30,7 +32,9 @@ static void	start_philo_threads(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
+	int		j;
 
+	j = 0;
 	i = 0;
 	while (i < table->info.n_philos)
 	{
@@ -40,7 +44,13 @@ static void	start_philo_threads(t_table *table)
 		if (pthread_create(&philo->philo_thread, NULL, routine, philo) != 0)
 		{
 			ft_error("Failed thread creation for philo\n");
-			return ;
+			while (j < i)
+			{
+				pthread_join(&table->philos[j].philo_thread, NULL);
+				j++;
+			}
+			cleanup(table);
+			exit(EXIT_FAILURE);
 		}
 		i++;
 	}
