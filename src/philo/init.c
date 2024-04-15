@@ -6,28 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:24:25 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 22:07:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 23:01:22 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
-
-static void	init_info_mutexes(t_info *info)
-{
-	if (pthread_mutex_init(&info->sim, NULL) != 0)
-		ft_error("error sim mutex init");
-	if (pthread_mutex_init(&info->eat, NULL) != 0)
-	{
-		pthread_mutex_destroy(&info->sim);
-		ft_error("error eat mutex init");
-	}
-	if (pthread_mutex_init(&info->print, NULL) != 0)
-	{
-		pthread_mutex_destroy(&info->sim);
-		pthread_mutex_destroy(&info->eat);
-		ft_error("error print mutex init");
-	}
-}
 
 static void	init_info(t_table *table, char **argv)
 {
@@ -48,7 +31,13 @@ static void	init_info(t_table *table, char **argv)
 		|| info->time_to_sleep < 60)
 		ft_error("time to die/eat/sleep must be more than 60ms");
 	info->stop_sim = false;
-	init_info_mutexes(info);
+	if (pthread_mutex_init(&info->sim, NULL) != 0)
+		ft_error("error sim mutex init");
+	if (pthread_mutex_init(&info->print, NULL) != 0)
+	{
+		pthread_mutex_destroy(&info->sim);
+		ft_error("error print mutex init");
+	}
 }
 
 static void	init_philo(t_table *table)
@@ -78,7 +67,8 @@ static void	init_philo(t_table *table)
 					pthread_mutex_destroy(&table->philos[j].last_meal);
 				j++;
 			}
-			destroy_info_mutexes(table);
+			pthread_mutex_destroy(&table->info.sim);
+			pthread_mutex_destroy(&table->info.print);
 			ft_error("error last meal mutex init");
 		}
 		i++;
@@ -97,7 +87,6 @@ static void	init_forks(t_table *table)
 		if (pthread_mutex_init(&fork->fork, NULL) != 0)
 		{
 			pthread_mutex_destroy(&table->info.sim);
-			pthread_mutex_destroy(&table->info.eat);
 			pthread_mutex_destroy(&table->info.print);
 			ft_error("error fork mutex init");
 		}

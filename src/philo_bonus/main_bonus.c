@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:30:28 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 19:57:22 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 22:47:55 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 		ft_error("too few / too many args");
 		return (0);
 	}
+	cleanup_semaphores();
 	check_argv(argv);
 	init_bonus(&table, argv);
 	simulation(&table);

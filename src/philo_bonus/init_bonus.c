@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:52:20 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 22:49:41 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,13 @@ static void	init_philo_bonus(t_table *table)
 
 static void	init_forks_bonus(t_table *table)
 {
-	
+	table->forks = sem_open("/forks", O_CREAT | O_EXCL, 0644, table->info.n_philos);
+	if (table->forks == SEM_FAILED)
+	{
+		sem_unlink("/forks");
+		ft_error("sem_open error");
+		exit(EXIT_FAILURE);
+	}
 }
 
 
@@ -62,4 +68,9 @@ void	init_bonus(t_table *table, char **argv)
 	init_info_bonus(table, argv);
 	init_philo_bonus(table);
 	init_forks_bonus(table);
+}
+
+void	cleanup_semaphores(void)
+{
+	sem_unlink("/forks");
 }

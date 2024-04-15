@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 21:13:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 22:47:29 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ typedef struct s_table
 {
 	t_info			info;
 	t_philo			philos[PHILOS_MAX];
-	sem_t			forks[PHILOS_MAX];
+	sem_t			*forks;
 }		t_table;
 
 void	check_argv(char **argv);
+void	cleanup_semaphores(void);
 void	init_bonus(t_table *table, char **argv);
 
+
+//utils
+
+void	ft_error(char *error_msg);
+long	ft_atol(const char *s);
 #endif

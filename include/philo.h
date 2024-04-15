@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:28:59 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 21:24:21 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 22:59:51 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_info
 	long			n_meals_to_eat;
 	bool			stop_sim;
 	pthread_mutex_t	sim;
-	pthread_mutex_t	eat;
 	pthread_mutex_t	print;
 }		t_info;
 
@@ -81,8 +80,6 @@ void		eat(t_philo *philo);
 //utils
 suseconds_t	get_time_ms(void);
 long		ft_atol(const char *s);
-bool		ft_isspace(char c);
-bool		ft_isdigit(char c);
 void		ft_error(char *error_msg);
 void		precise_usleep(long milliseconds);
 
