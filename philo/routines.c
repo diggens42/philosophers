@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:40:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:26 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 01:47:21 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	check_death(t_table *table)
 		pthread_mutex_unlock(&table->philos[i].last_meal);
 		if (diff > table->info.time_to_die)
 		{
-			print_action(&table->philos[i], "has died\n");
+			print_action(&table->philos[i], "has died");
 			pthread_mutex_lock(&table->info.sim);
 			table->info.stop_sim = true;
 			pthread_mutex_unlock(&table->info.sim);
@@ -68,9 +68,9 @@ void	*routine(void *arg)
 	while (!philo->info->stop_sim)
 	{
 		eat(philo);
-		print_action(philo, "is sleeping\n");
+		print_action(philo, "is sleeping");
 		precise_usleep(philo->info->time_to_sleep);
-		print_action(philo, "is thinking\n");
+		print_action(philo, "is thinking");
 	}
 	return (NULL);
 }

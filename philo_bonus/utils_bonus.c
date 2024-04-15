@@ -6,20 +6,20 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 22:05:44 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:07 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 01:26:29 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static bool	ft_isspace(char c)
+bool	ft_isspace(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (true);
 	return (false);
 }
 
-static bool	ft_isdigit(char c)
+bool	ft_isdigit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (true);

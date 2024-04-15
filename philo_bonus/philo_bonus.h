@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 00:47:22 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 01:36:16 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,15 @@ typedef struct s_info
 	bool			stop_sim;
 	sem_t			*sim;
 	sem_t			*print;
+	sem_t			*forks;
 }		t_info;
 
 typedef struct s_philo
 {
 	int				id;
 	int				n_meals_eaten;
-	bool			is_dead;
-	bool			is_full;
+	// bool			is_dead;
+	// bool			is_full;
 	suseconds_t		time_last_meal;
 	suseconds_t		time_start_routine;
 	sem_t			*last_meal;
@@ -57,16 +58,16 @@ typedef struct s_table
 {
 	t_info			info;
 	t_philo			philos[PHILOS_MAX];
-	sem_t			*forks;
 }		t_table;
 
 void		check_argv(char **argv);
 void		cleanup_semaphores(void);
 void		init_bonus(t_table *table, char **argv);
 void		monitor_thread(t_table *table);
-
+void		simulation_bonus(t_table *table);
 //utils
-
+bool		ft_isspace(char c);
+bool		ft_isdigit(char c);
 void		ft_error(char *error_msg);
 long		ft_atol(const char *s);
 suseconds_t	get_time_ms(void);

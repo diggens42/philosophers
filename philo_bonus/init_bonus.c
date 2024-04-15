@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:07 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 01:38:19 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	init_info_bonus(t_table *table, char **argv)
 	info->stop_sim = false;
 	info->sim = ft_sem_open("/sim", 1);
 	info->print = ft_sem_open("/print", 1);
+	info->forks = ft_sem_open("/forks", table->info.n_philos);
 }
 
 static void	init_philo_bonus(t_table *table)
@@ -55,23 +56,16 @@ static void	init_philo_bonus(t_table *table)
 		philo = &table->philos[i];
 		philo->id = i + 1;
 		philo->n_meals_eaten = 0;
-		philo->is_dead = false;
-		philo->is_full = false;
+		// philo->is_dead = false;
+		// philo->is_full = false;
 		philo->info = &table->info;
 		philo->last_meal = ft_sem_open("/last_meal", 1);
 		i++;
 	}
 }
 
-static void	init_forks_bonus(t_table *table)
-{
-	table->forks = ft_sem_open("/forks", table->info.n_philos);
-}
-
-
 void	init_bonus(t_table *table, char **argv)
 {
 	init_info_bonus(table, argv);
 	init_philo_bonus(table);
-	init_forks_bonus(table);
 }

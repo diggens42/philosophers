@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:03:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:26 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 01:51:21 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	take_forks_even(t_philo *philo)
 	// if (philo->id % 2 == 0)
 	// 	usleep(150);
 	pthread_mutex_lock(philo->left_fork);
-	print_action(philo, "has taken a fork\n");
+	print_action(philo, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
-	print_action(philo, "has taken a fork\n");
+	print_action(philo, "has taken a fork");
 }
 
 static void take_forks_odd(t_philo *philo)
@@ -37,16 +37,16 @@ static void take_forks_odd(t_philo *philo)
 	else if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
-		print_action(philo, "has taken a fork\n");
+		print_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
-		print_action(philo, "has taken a fork\n");
+		print_action(philo, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(philo->right_fork);
-		print_action(philo, "has taken a fork\n");
+		print_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
-		print_action(philo, "has taken a fork\n");
+		print_action(philo, "has taken a fork");
 	}
 }
 
@@ -74,14 +74,14 @@ void	eat(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->info->sim);
 	take_forks(philo);
-	print_action(philo, "is eating\n");
+	print_action(philo, "is eating");
 	pthread_mutex_lock(&philo->last_meal);
 	philo->time_last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->last_meal);
+	precise_usleep(philo->info->time_to_eat);
 	philo->n_meals_eaten++;
 	if (philo->is_full == false)
 		philo->is_full = is_full(philo);
-	precise_usleep(philo->info->time_to_eat);
 	drop_forks(philo);
 }
 
@@ -96,6 +96,6 @@ void	print_action(t_philo *philo, char *str)
 		return ;
 	}
 	time = get_time_ms() - philo->time_start_routine;
-	printf("%d Philo %d %s ", time, philo->id, str);
+	printf("%d Philo %d %s \n", time, philo->id, str);
 	pthread_mutex_unlock(&philo->info->print);
 }
