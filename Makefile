@@ -1,34 +1,44 @@
-NAME		= philo
+MANDATORY		= philo
+BONUS			= philo_bonus
 
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -pthread -O3
+CC				= cc
+CFLAGS			= -Wall -Wextra -Werror -pthread -O3
 
-SRC_FOLDER	= src src/philo src/philo_bonus
-INC_DIRS	= include
+SRC_FOLDER		= src src/philo src/philo_bonus
+INC_DIRS		= include
 
 vpath %.h $(INC_DIRS)
 vpath %.c $(SRC_FOLDER)
 
-HEADER		= philo.h
+#HEADER		= philo.h
 
-SRCS		= main.c check.c init.c simulation.c utils.c utils_2.c events.c routines.c cleanup.c
+SRC				= main.c check.c init.c simulation.c events.c routines.c cleanup.c utils.c utils_2.c
+SRC_BONUS		= main_bonus.c check_bonus.c init_bonus.c utils_bonus.c
 
-OBJS		= $(SRCS:%.c=%.o)
+OBJ				= $(SRC:%.c=%.o)
+OBJ_BONUS		= $(SRC_BONUS:%.c=%.o)
 
-all:		$(NAME)
+all:			$(MANDATORY)
 
-$(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) -o $@ $(OBJS)
+$(MANDATORY):	$(OBJ)
+			$(CC) $(CFLAGS) -o $@ $(OBJ)
 
+bonus:			$(BONUS)
+
+$(BONUS):		$(OBJ_BONUS)
+			$(CC) $(CFLAGS) -o $@ (OBJ_BONUS)
 debug:
-	$(CC) $(addprefix $(SRC_FOLDER)/, $(SRCS)) -g -o ../debugger/a.out -lpthread
+			$(CC) $(addprefix $(SRC_FOLDER)/, $(SRC)) -g -o ../debugger/a.out -lpthread
 
+debug_bonus:
+			$(CC) $(addprefix $(SRC_FOLDER)/, $(SRC_BONUS)) -g -o ../debugger/a.out -lpthread
 clean:
-	rm -f $(OBJS)
+			rm -f $(OBJ)
 
-fclean: clean
-	rm -f $(NAME)
+fclean: 	clean
+			rm -f $(MANDATORY)
+			rm -f $(BONUS)
 
-re: fclean all
+re: 		fclean all
 
 .PHONY: all clean fclean re
