@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:30:28 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:38:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 19:57:22 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	check_argv(argv);
-	init(&table, argv);
+	init_bonus(&table, argv);
 	simulation(&table);
 	cleanup(&table);
 	return (0);

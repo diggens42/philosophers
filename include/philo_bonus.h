@@ -6,12 +6,12 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:51:31 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 21:13:54 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,6 +25,7 @@
 # include <semaphore.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <stdbool.h>
 
 #define PHILOS_MAX 200
 
@@ -56,6 +57,7 @@ typedef struct s_table
 	sem_t			forks[PHILOS_MAX];
 }		t_table;
 
+void	check_argv(char **argv);
 void	init_bonus(t_table *table, char **argv);
 
 #endif

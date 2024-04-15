@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 19:18:22 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/15 21:12:51 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/14 22:05:44 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/15 19:56:07 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "../../include/philo_bonus.h"
 
 bool	ft_isspace(char c)
 {
@@ -49,30 +49,4 @@ long	ft_atol(const char *s)
 		s++;
 	}
 	return (sign * result);
-}
-
-void	ft_error(char *error_msg)
-{
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
-}
-
-suseconds_t	get_time_ms(void)
-{
-	struct timeval	time_value;
-
-	if (gettimeofday(&time_value, NULL) == -1)
-		ft_error("get time error");
-	return ((time_value.tv_sec * 1000LL) + (time_value.tv_usec / 1000));
-}
-
-void	precise_usleep(long milliseconds)
-{
-	suseconds_t	time_start;
-	suseconds_t	time_end;
-
-	time_start = get_time_ms();
-	time_end = time_start + milliseconds;
-	while (get_time_ms() < time_end)
-		usleep(100);
 }

@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:03:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:27:24 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 22:09:20 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,51 +20,52 @@ static bool	is_full(t_philo *philo)
 	return (false);
 }
 
+static void	take_forks_even(t_philo *philo)
+{
+	// if (philo->id % 2 == 0)
+	// 	usleep(150);
+	pthread_mutex_lock(philo->left_fork);
+	print_action(philo, "has taken a fork\n");
+	pthread_mutex_lock(philo->right_fork);
+	print_action(philo, "has taken a fork\n");
+}
+
+static void take_forks_odd(t_philo *philo)
+{
+	if (philo->id == philo->info->n_philos)
+		usleep(10);
+	else if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_action(philo, "has taken a fork\n");
+		pthread_mutex_lock(philo->right_fork);
+		print_action(philo, "has taken a fork\n");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_action(philo, "has taken a fork\n");
+		pthread_mutex_lock(philo->left_fork);
+		print_action(philo, "has taken a fork\n");
+	}
+}
+
 static void	take_forks(t_philo *philo)
 {
-	bool	pick_left_first;
-
-	if (philo->id % 2 != 0)
-	{
-		if (philo->n_meals_eaten % 2 == 0)
-			pick_left_first = true;
-		else
-			pick_left_first = false;
-	}
+	if (philo->info->n_philos % 2 == 0)
+		take_forks_even(philo);
 	else
-	{
-		if (philo->n_meals_eaten % 2 == 0)
-			pick_left_first = false;
-		else
-			pick_left_first = true;
-	}
-
-	if (pick_left_first)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_action(philo, "has taken a fork\n");
-		pthread_mutex_lock(philo->right_fork);
-		print_action(philo, "has taken a fork\n");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_action(philo, "has taken a fork\n");
-		pthread_mutex_lock(philo->left_fork);
-		print_action(philo, "has taken a fork\n");
-	}
+		take_forks_odd(philo);
 }
 
 static void	drop_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 }
 
 void	eat(t_philo *philo)
 {
-	if (philo->info->stop_sim)
-		return ;
 	pthread_mutex_lock(&philo->info->sim);
 	if (philo->info->stop_sim)
 	{

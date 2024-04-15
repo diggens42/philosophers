@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:40:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:27:24 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 21:06:47 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 0 && philo->info->n_philos % 2 == 0)
 		precise_usleep(10);
 	while (!philo->info->stop_sim)
 	{

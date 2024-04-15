@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:28:59 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/14 21:21:09 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/15 21:24:21 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_table
 void		check_argv(char **argv);
 //init & cleanup
 void		init(t_table *table, char **argv);
+void		destroy_info_mutexes(t_table *table);
 void		cleanup(t_table *table);
 //simulation
 void		simulation(t_table *table);
@@ -84,5 +85,5 @@ bool		ft_isspace(char c);
 bool		ft_isdigit(char c);
 void		ft_error(char *error_msg);
 void		precise_usleep(long milliseconds);
-uint32_t 	ft_rand(t_philo *philo);
+
 #endif
