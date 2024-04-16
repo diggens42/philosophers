@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sim_philo.c.c                                      :+:      :+:    :+:   */
+/*   sim_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:13:12 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 20:12:55 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 22:54:15 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,20 @@ static void	philo_routine(t_philo *philo)
 
 void	fork_philo_process(t_table *table)
 {
+	t_philo	*philo;
 	pid_t	pid;
 	int		i;
 
 	i = 0;
 	while (i < table->info.n_philos)
 	{
+		philo = &table->philos[i];
+		philo->time_last_meal = get_time_ms();
+		philo->time_start_routine = get_time_ms();
 		pid = fork();
 		if (pid == 0)
 		{
-			philo_routine(&table->philos[i]);
+			philo_routine(philo);
 			exit(EXIT_SUCCESS);
 		}
 		else if (pid < 0)

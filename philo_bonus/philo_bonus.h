@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 21:25:13 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 22:46:41 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ typedef struct s_philo
 {
 	int				id;
 	int				n_meals_eaten;
-	// bool			is_dead;
-	// bool			is_full;
+	char			last_meal_name[16];
+	sem_t			*last_meal;
 	suseconds_t		time_last_meal;
 	suseconds_t		time_start_routine;
-	sem_t			*last_meal;
 	t_info			*info;
 }		t_philo;
 
@@ -73,11 +72,15 @@ void		take_forks(t_philo *philo);
 bool		ft_isspace(char c);
 bool		ft_isdigit(char c);
 long		ft_atol(const char *s);
+char		*ft_itoa(int n);
 size_t		ft_strlen(const char *str);
 size_t		ft_strlcpy(char *dest, const char *src, size_t size);
+size_t		ft_strlcat(char *dest, const char *src, size_t dest_size);
+char		*ft_strdup(const char *s1);
 void		ft_error(char *error_msg);
 void		ft_sem_unlink(void);
 void		print_action(t_philo *philo, char *str);
 void		precise_usleep(long milliseconds);
 suseconds_t	get_time_ms(void);
+
 #endif

@@ -5,59 +5,108 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 19:11:01 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 21:25:01 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/16 21:32:29 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/16 21:56:53 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	ft_error(char *error_msg)
+static int	ft_digit_counter(int n)
 {
-	ft_sem_unlink();
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
-}
+	int	digits;
 
-void	ft_sem_unlink(void)
-{
-	sem_unlink("print");
-	sem_unlink("sim");
-	sem_unlink("last_meal");
-	sem_unlink("forks");
-}
-
-void	print_action(t_philo *philo, char *str)
-{
-	suseconds_t	time;
-
-	sem_wait(philo->info->print);
-	if (philo->info->stop_sim == true)
+	digits = 1;
+	while (n >= 10)
 	{
-		sem_post(philo->info->print);
-		return ;
+		digits++;
+		n = n / 10;
 	}
-	time = get_time_ms() - philo->time_start_routine;
-	printf("%d Philo %d %s ", time, philo->id, str);
-	sem_post(philo->info->print);
+	return (digits);
 }
 
-void	precise_usleep(long milliseconds)
+static char	*ft_digit_output(int n, int digits, int sign)
 {
-	suseconds_t	time_start;
-	suseconds_t	time_end;
+	char	*str;
+	int		i;
 
-	time_start = get_time_ms();
-	time_end = time_start + milliseconds;
-	while (get_time_ms() < time_end)
-		usleep(100);
+	i = 0;
+	if (sign == -1)
+		digits++;
+	str = (char *)malloc((digits + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	if (sign == -1)
+	{
+		str[i] = '-';
+		i++;
+	}
+	str[digits] = '\0';
+	while (digits > i)
+	{
+		digits--;
+		str[digits] = '0' + (n % 10);
+		n = n / 10;
+	}
+	return (str);
 }
 
-suseconds_t	get_time_ms(void)
+char	*ft_itoa(int n)
 {
-	struct timeval	time_value;
+	char	*str;
+	int		sign;
+	int		digits;
 
-	if (gettimeofday(&time_value, NULL) == -1)
-		ft_error("get time error");
-	return ((time_value.tv_sec * 1000LL) + (time_value.tv_usec / 1000));
+	sign = 1;
+	if (n == 0)
+		return (ft_strdup("0"));
+	if (n < 0)
+	{
+		if (n == -2147483648)
+			return (ft_strdup("-2147483648"));
+		n = -n;
+		sign = -1;
+	}
+	digits = ft_digit_counter(n);
+	str = ft_digit_output(n, digits, sign);
+	return (str);
+}
+
+size_t	ft_strlcat(char *dest, const char *src, size_t dest_size)
+{
+	size_t	dest_len;
+	size_t	src_len;
+	size_t	i;
+	size_t	j;
+
+	dest_len = 0;
+	src_len = ft_strlen(src);
+	while (dest[dest_len] != '\0' && dest_len < dest_size)
+		dest_len++;
+	if (dest_len >= dest_size)
+		return (dest_size + src_len);
+	i = dest_len;
+	j = 0;
+	while (i < dest_size - 1 && src[j] != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (dest_len + src_len);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	size_t	len;
+	char	*copy;
+
+	len = ft_strlen(s1) + 1;
+	copy = (char *)malloc(len);
+	if (copy == NULL)
+		return (NULL);
+	ft_strlcpy(copy, s1, len);
+	return (copy);
 }

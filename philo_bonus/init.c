@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 21:21:50 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 22:55:36 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,15 @@ static void	init_info(t_table *table, char **argv)
 		ft_error("time to die/eat/sleep must be more than 60ms");
 	info->stop_sim = false;
 	info->sim = ft_sem_open("sim", 1);
-	printf("test1\n");
 	info->print = ft_sem_open("print", 1);
-	printf("test2\n");
 	info->forks = ft_sem_open("forks", info->n_philos);
-	printf("test3\n");
 }
 
 static void	init_philo(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
-	char	last_meal_name[16];
+	char	*temp;
 
 	i = 0;
 	while (i < table->info.n_philos)
@@ -61,10 +58,14 @@ static void	init_philo(t_table *table)
 		philo = &table->philos[i];
 		philo->id = i + 1;
 		philo->n_meals_eaten = 0;
-		// philo->is_dead = false;
-		// philo->is_full = false;
 		philo->info = &table->info;
-		philo->last_meal = ft_sem_open("last_meal", 1);
+		ft_strlcpy(philo->last_meal_name, "last_meal_", sizeof(philo->last_meal_name));
+		temp = ft_itoa(philo->id);
+		ft_strlcat(philo->last_meal_name, temp, sizeof(philo->last_meal_name));
+		printf("test1 %s\n", philo->last_meal_name);
+		free(temp);
+		printf("test2 %s\n", philo->last_meal_name);
+		philo->last_meal = ft_sem_open(philo->last_meal_name, 1);
 		i++;
 	}
 }
