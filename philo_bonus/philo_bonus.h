@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:36:16 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 20:15:25 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,22 @@ typedef struct s_table
 	t_philo			philos[PHILOS_MAX];
 }		t_table;
 
-void		check_argv(char **argv);
-void		cleanup_semaphores(void);
-void		init_bonus(t_table *table, char **argv);
-void		monitor_thread(t_table *table);
-void		simulation_bonus(t_table *table);
+//error check
+void		check_input(int argc, char **argv);
+//init
+void		init(t_table *table, char **argv);
+//simulation
+void		fork_philo_process(t_table *table);
+void 		wait_philo_process(t_table *table);
+void		start_monitor_thread(t_table *table);
+void		take_forks(t_philo *philo);
 //utils
 bool		ft_isspace(char c);
 bool		ft_isdigit(char c);
-void		ft_error(char *error_msg);
 long		ft_atol(const char *s);
+void		ft_error(char *error_msg);
+void		precise_usleep(long milliseconds);
+void		ft_sem_unlink(void);
+void		print_action(t_philo *philo, char *str);
 suseconds_t	get_time_ms(void);
-
 #endif

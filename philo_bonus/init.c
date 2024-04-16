@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_bonus.c                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:38:19 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 20:25:44 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ static sem_t *ft_sem_open(char *name, int amount)
 
 	sem = sem_open(name, O_CREAT | O_EXCL, 0644, amount);
 	if (sem == SEM_FAILED)
-		ft_error_semopen("error sem_open");
+		ft_error("error sem_open");
+	return (sem);
 }
 
-static void	init_info_bonus(t_table *table, char **argv)
+static void	init_info(t_table *table, char **argv)
 {
 	t_info	*info;
 
@@ -45,7 +46,7 @@ static void	init_info_bonus(t_table *table, char **argv)
 	info->forks = ft_sem_open("/forks", table->info.n_philos);
 }
 
-static void	init_philo_bonus(t_table *table)
+static void	init_philo(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
@@ -64,8 +65,8 @@ static void	init_philo_bonus(t_table *table)
 	}
 }
 
-void	init_bonus(t_table *table, char **argv)
+void	init(t_table *table, char **argv)
 {
-	init_info_bonus(table, argv);
-	init_philo_bonus(table);
+	init_info(table, argv);
+	init_philo(table);
 }

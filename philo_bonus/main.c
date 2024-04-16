@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup_bonus.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 23:28:25 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:07 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/14 21:30:28 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/16 20:15:38 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	ft_error(char *error_msg)
+void	simulation(t_table *table)
 {
-	cleanup_semaphores();
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
+	fork_philo_process(table);
+	start_monitor_thread(table);
+	wait_philo_process(table);
 }
 
-void	cleanup_semaphores(void)
+int	main(int argc, char **argv)
 {
-	sem_unlink("/print");
-	sem_unlink("/sim");
-	sem_unlink("/last_meal");
-	sem_unlink("/forks");
+	t_table	table;
+
+	ft_sem_unlink();
+	check_input(argc, argv);
+	init(&table, argv);
+	simulation(&table);
+	ft_sem_unlink();
+	return (0);
 }

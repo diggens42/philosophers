@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_bonus.c                                    :+:      :+:    :+:   */
+/*   sim_monitor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:40:10 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:07 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 20:35:20 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	stop_simulation(t_table *table)
 	return (false);
 }
 
-static void monitor(void *arg)
+static void *monitor(void *arg)
 {
 	t_table	*table;
 
@@ -59,12 +59,13 @@ static void monitor(void *arg)
 	return (NULL);
 }
 
-void	monitor_thread(t_table *table)
+void	start_monitor_thread(t_table *table)
 {
-	pthread_t	monitor;
+	pthread_t	monitor_thread;
 
-	if (pthread_create(&monitor, NULL, monitor, table) != 0)
+	monitor_thread = NULL;
+	if (pthread_create(&monitor_thread, NULL, monitor, table) != 0)
 		ft_error("error creating monitor thread");
-	if (pthread_detach(monitor) != 0)
+	if (pthread_detach(monitor_thread) != 0)
 		ft_error("error detaching monitor thread");
 }

@@ -3,7 +3,7 @@ BONUS			= philo_bonus
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -pthread -O3
 
-SRC_BONUS		= main_bonus.c check_bonus.c init_bonus.c cleanup_bonus.c simulation_bonus.c monitor_bonus.c utils_bonus.c
+SRC_BONUS		= main.c check_input.c init.c sim_philo.c sim_monitor.c sim_forks.c utils.c utils2.c
 
 OBJ_BONUS		= $(SRC_BONUS:%.c=%.o)
 
