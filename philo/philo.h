@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:28:59 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:17:25 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 19:18:05 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,25 @@ typedef struct s_table
 }		t_table;
 
 //error_check
-void		check_argv(char **argv);
-//init & cleanup
+void		check_input(int argc, char **argv);
+//init
 void		init(t_table *table, char **argv);
-void		cleanup(t_table *table);
 //simulation
-void		simulation(t_table *table);
-void		*routine(void *arg);
-void		*monitor(void *arg);
-//events
-void		print_action(t_philo *philo, char *str);
-void		eat(t_philo *philo);
+void		start_philo_threads(t_table *table);
+void		join_philo_threads(t_table *table);
+void		start_monitor_thread(t_table *table);
+void		join_monitor_thread(t_table *table);
+void		take_forks(t_philo *philo);
+void		drop_forks(t_philo *philo);
+
 //utils
 bool		ft_isspace(char c);
 bool		ft_isdigit(char c);
-suseconds_t	get_time_ms(void);
 long		ft_atol(const char *s);
 void		ft_error(char *error_msg);
+void		print_action(t_philo *philo, char *str);
 void		precise_usleep(long milliseconds);
+void		ft_mutex_destroy(t_table *table);
+suseconds_t	get_time_ms(void);
 
 #endif

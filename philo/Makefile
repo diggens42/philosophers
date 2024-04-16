@@ -3,7 +3,7 @@ MANDATORY		= philo
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -pthread -O3
 
-SRC				= main.c check.c init.c simulation.c events.c routines.c cleanup.c utils.c utils_2.c
+SRC				= main.c check_input.c init.c sim_philo.c sim_monitor.c sim_forks.c utils.c utils2.c
 
 OBJ				= $(SRC:%.c=%.o)
 

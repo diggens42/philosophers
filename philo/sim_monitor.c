@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routines.c                                         :+:      :+:    :+:   */
+/*   sim_monitor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 22:40:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:47:21 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/16 18:57:14 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/16 19:23:15 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,7 @@ static void	check_full(t_table *table)
 	}
 }
 
-void	*routine(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	if (philo->id % 2 == 0 && philo->info->n_philos % 2 == 0)
-		precise_usleep(10);
-	while (!philo->info->stop_sim)
-	{
-		eat(philo);
-		print_action(philo, "is sleeping");
-		precise_usleep(philo->info->time_to_sleep);
-		print_action(philo, "is thinking");
-	}
-	return (NULL);
-}
-
-void	*monitor(void *arg)
+static void	*monitor(void *arg)
 {
 	t_table	*table;
 	bool	stop;
@@ -98,4 +81,20 @@ void	*monitor(void *arg)
 			break ;
 	}
 	return (NULL);
+}
+
+void	start_monitor_thread(t_table *table)
+{
+	if (pthread_create(&table->monitor_thread, NULL, monitor, table) != 0)
+	{
+		ft_error("failed thread creation for monitor");
+		join_philo_threads(table);
+		ft_mutex_destroy(table);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	join_monitor_thread(t_table *table)
+{
+	pthread_join(table->monitor_thread, NULL);
 }

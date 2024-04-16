@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 20:15:25 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 21:25:13 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ void		take_forks(t_philo *philo);
 bool		ft_isspace(char c);
 bool		ft_isdigit(char c);
 long		ft_atol(const char *s);
+size_t		ft_strlen(const char *str);
+size_t		ft_strlcpy(char *dest, const char *src, size_t size);
 void		ft_error(char *error_msg);
-void		precise_usleep(long milliseconds);
 void		ft_sem_unlink(void);
 void		print_action(t_philo *philo, char *str);
+void		precise_usleep(long milliseconds);
 suseconds_t	get_time_ms(void);
 #endif

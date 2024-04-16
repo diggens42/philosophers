@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 22:05:44 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:26:29 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/16 21:24:41 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,31 @@ long	ft_atol(const char *s)
 	return (sign * result);
 }
 
-suseconds_t	get_time_ms(void)
+size_t	ft_strlen(const char *str)
 {
-	struct timeval	time_value;
+	size_t	i;
 
-	if (gettimeofday(&time_value, NULL) == -1)
-		ft_error("get time error");
-	return ((time_value.tv_sec * 1000LL) + (time_value.tv_usec / 1000));
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
-void	precise_usleep(long milliseconds)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	suseconds_t	time_start;
-	suseconds_t	time_end;
+	size_t	src_len;
+	size_t	i;
 
-	time_start = get_time_ms();
-	time_end = time_start + milliseconds;
-	while (get_time_ms() < time_end)
-		usleep(100);
+	src_len = ft_strlen(src);
+	if (size == 0 || dest == NULL)
+		return (src_len);
+	i = 0;
+	while (i < size - 1 && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (src_len);
 }
+

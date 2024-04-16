@@ -1,45 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 19:11:01 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 21:25:01 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/14 19:36:11 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/16 19:07:57 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
-
-void	ft_error(char *error_msg)
-{
-	ft_sem_unlink();
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
-}
-
-void	ft_sem_unlink(void)
-{
-	sem_unlink("print");
-	sem_unlink("sim");
-	sem_unlink("last_meal");
-	sem_unlink("forks");
-}
+#include "philo.h"
 
 void	print_action(t_philo *philo, char *str)
 {
 	suseconds_t	time;
 
-	sem_wait(philo->info->print);
+	pthread_mutex_lock(&philo->info->print);
 	if (philo->info->stop_sim == true)
 	{
-		sem_post(philo->info->print);
+		pthread_mutex_unlock(&philo->info->print);
 		return ;
 	}
 	time = get_time_ms() - philo->time_start_routine;
-	printf("%d Philo %d %s ", time, philo->id, str);
-	sem_post(philo->info->print);
+	printf("%d Philo %d %s \n", time, philo->id, str);
+	pthread_mutex_unlock(&philo->info->print);
+}
+
+suseconds_t	get_time_ms(void)
+{
+	struct timeval	time_value;
+
+	if (gettimeofday(&time_value, NULL) == -1)
+		ft_error("get time error");
+	return ((time_value.tv_sec * 1000LL) + (time_value.tv_usec / 1000));
 }
 
 void	precise_usleep(long milliseconds)
@@ -53,11 +47,17 @@ void	precise_usleep(long milliseconds)
 		usleep(100);
 }
 
-suseconds_t	get_time_ms(void)
+void	ft_mutex_destroy(t_table *table)
 {
-	struct timeval	time_value;
+	int	i;
 
-	if (gettimeofday(&time_value, NULL) == -1)
-		ft_error("get time error");
-	return ((time_value.tv_sec * 1000LL) + (time_value.tv_usec / 1000));
+	i = 0;
+	while (i < table->info.n_philos)
+	{
+		pthread_mutex_destroy(&table->forks[i].fork);
+		pthread_mutex_destroy(&table->philos[i].last_meal);
+		i++;
+	}
+	pthread_mutex_destroy(&table->info.sim);
+	pthread_mutex_destroy(&table->info.print);
 }
