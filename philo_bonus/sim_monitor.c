@@ -6,66 +6,94 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:40:10 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 22:48:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/17 02:19:37 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static bool	stop_simulation(t_table *table)
+static bool	check_death(t_philo	*philo)
 {
-	bool	all_philos_full;
-	int		i;
-	t_philo	*philo;
+	suseconds_t	time;
 
-	all_philos_full = true;
-	i = 0;
-	while (i < table->info.n_philos)
+	sem_wait(philo->last_meal);
+	if (get_time_ms() - philo->time_last_meal > philo->info->time_to_die)
 	{
-		philo = &table->philos[i];
-		sem_wait(philo->last_meal);
-		if (get_time_ms() - philo->time_last_meal > table->info.time_to_die)
-		{
-			sem_post(philo->last_meal);
-			return (true);
-		}
+		sem_wait(philo->info->print);
+		time = get_time_ms() - philo->time_start_routine;
+		printf("%d Philo %d has died\n", time, philo->id);
 		sem_post(philo->last_meal);
-		if (table->info.n_meals_to_eat > 0
-				&& philo->n_meals_eaten < table->info.n_meals_to_eat)
-			all_philos_full = false;
-		i++;
-	}
-	if (table->info.n_meals_to_eat > 0 && all_philos_full == true)
 		return (true);
+	}
+	sem_post(philo->last_meal);
 	return (false);
 }
 
-static void *monitor(void *arg)
+static void *dead_monitor(void *arg)
 {
-	t_table	*table;
+	t_philo	*philo;
 
-	table = (t_table *)arg;
+	philo = (t_philo *)arg;
 	while (true)
 	{
-		if (stop_simulation(table))
+		sem_wait(philo->info->sim);
+		if (check_death(philo))
 		{
-			sem_wait(table->info.sim);
-			table->info.stop_sim = true;
-			sem_post(table->info.sim);
-			break ;
+			sem_post(philo->info->sim);
+			exit(EXIT_SUCCESS);
 		}
-		usleep(100);
+		sem_post(philo->info->sim);
 	}
 	return (NULL);
 }
 
-void	start_monitor_thread(t_table *table)
+void	start_death_check(t_philo *philo)
 {
-	pthread_t	monitor_thread;
+	pthread_t	deadge;
 
-	monitor_thread = NULL;
-	if (pthread_create(&monitor_thread, NULL, monitor, table) != 0)
+	deadge = NULL;
+	philo->time_last_meal = get_time_ms();
+	philo->time_start_routine = get_time_ms();
+	if (pthread_create(&deadge, NULL, dead_monitor, philo) != 0)
 		ft_error("error creating monitor thread");
-	if (pthread_detach(monitor_thread) != 0)
+	if (pthread_detach(deadge) != 0)
 		ft_error("error detaching monitor thread");
+}
+
+static void *full_monitor(void *arg)
+{
+	t_table	*table;
+	int		philos_full;
+	int		i;
+
+	table = (t_table *)arg;
+	philos_full = 0;
+	while (philos_full < table->info.n_philos)
+	{
+		sem_wait(table->info.full);
+		philos_full++;
+	}
+	if (philos_full >= table->info.n_philos)
+	{
+		// sem_wait(table->info.print);
+		i = 0;
+		while (i < table->info.n_philos)
+		{
+			kill(table->philos[i].pid, SIGTERM);
+			i++;
+		}
+	}
+	return (NULL);
+}
+
+void	start_full_check(t_table *table)
+{
+	pthread_t	full;
+
+	full = NULL;
+		if (pthread_create(&full, NULL, full_monitor, table) != 0)
+		ft_error("error creating monitor thread");
+	if (pthread_detach(full) != 0)
+		ft_error("error detaching monitor thread");
+
 }

@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 22:55:36 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/17 02:12:45 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	init_info(t_table *table, char **argv)
 		ft_error("time to die/eat/sleep must be more than 60ms");
 	info->stop_sim = false;
 	info->sim = ft_sem_open("sim", 1);
+	info->start = ft_sem_open("start", 0);
+	info->start = ft_sem_open("full", 1);
 	info->print = ft_sem_open("print", 1);
 	info->forks = ft_sem_open("forks", info->n_philos);
 }
@@ -62,9 +64,7 @@ static void	init_philo(t_table *table)
 		ft_strlcpy(philo->last_meal_name, "last_meal_", sizeof(philo->last_meal_name));
 		temp = ft_itoa(philo->id);
 		ft_strlcat(philo->last_meal_name, temp, sizeof(philo->last_meal_name));
-		printf("test1 %s\n", philo->last_meal_name);
 		free(temp);
-		printf("test2 %s\n", philo->last_meal_name);
 		philo->last_meal = ft_sem_open(philo->last_meal_name, 1);
 		i++;
 	}

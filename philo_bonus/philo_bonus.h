@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 22:46:41 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/17 02:07:53 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <signal.h>
 # include <semaphore.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -37,7 +38,9 @@ typedef struct s_info
 	long			time_to_sleep;
 	long			n_meals_to_eat;
 	bool			stop_sim;
+	sem_t			*start;
 	sem_t			*sim;
+	sem_t			*full;
 	sem_t			*print;
 	sem_t			*forks;
 }		t_info;
@@ -50,6 +53,7 @@ typedef struct s_philo
 	sem_t			*last_meal;
 	suseconds_t		time_last_meal;
 	suseconds_t		time_start_routine;
+	pid_t			pid;
 	t_info			*info;
 }		t_philo;
 
@@ -66,7 +70,8 @@ void		init(t_table *table, char **argv);
 //simulation
 void		fork_philo_process(t_table *table);
 void 		wait_philo_process(t_table *table);
-void		start_monitor_thread(t_table *table);
+void		start_death_check(t_philo *philo);
+void		start_full_check(t_table *table);
 void		take_forks(t_philo *philo);
 //utils
 bool		ft_isspace(char c);

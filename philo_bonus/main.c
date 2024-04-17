@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:30:28 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 22:48:25 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/17 00:12:14 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	simulation(t_table *table)
 {
 	fork_philo_process(table);
-	start_monitor_thread(table);
 	wait_philo_process(table);
 }
 

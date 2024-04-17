@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:11:01 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 22:50:26 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/17 01:53:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	ft_sem_unlink(void)
 
 	sem_unlink("print");
 	sem_unlink("sim");
+	sem_unlink("full");
 	sem_unlink("forks");
+	sem_unlink("start");
 	i = 0;
-	while (i < 200)
+	while (i <= 200)
 	{
 		ft_strlcpy(last_meal_name, "last_meal_", sizeof(last_meal_name));
 		temp = ft_itoa(i);
