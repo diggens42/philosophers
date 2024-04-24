@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:40:10 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/17 02:19:37 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:10:11 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void *full_monitor(void *arg)
 		sem_wait(table->info.full);
 		philos_full++;
 	}
+	sem_wait(table->info.print);
 	if (philos_full >= table->info.n_philos)
 	{
 		// sem_wait(table->info.print);
@@ -91,7 +92,7 @@ void	start_full_check(t_table *table)
 	pthread_t	full;
 
 	full = NULL;
-		if (pthread_create(&full, NULL, full_monitor, table) != 0)
+	if (pthread_create(&full, NULL, full_monitor, table) != 0)
 		ft_error("error creating monitor thread");
 	if (pthread_detach(full) != 0)
 		ft_error("error detaching monitor thread");

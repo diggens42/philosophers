@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:13:12 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/17 02:07:43 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:12:38 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	philo_routine(t_philo *philo)
 	while (!philo->info->stop_sim)
 	{
 		eat(philo);
+		if (philo->info->stop_sim)
+			return ;
 		print_action(philo, "is sleeping");
 		precise_usleep(philo->info->time_to_sleep);
 		print_action(philo, "is thinking");
