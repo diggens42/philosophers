@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:03:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:53:07 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:18:30 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	take_forks_even(t_philo *philo)
 {
+	usleep(50);
 	pthread_mutex_lock(philo->left_fork);
 	print_action(philo, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
@@ -22,7 +23,6 @@ static void	take_forks_even(t_philo *philo)
 
 static void	take_forks_odd(t_philo *philo)
 {
-	usleep(50);
 	if (philo->id == philo->info->n_philos)
 	{
 		pthread_mutex_lock(philo->right_fork);
@@ -32,6 +32,7 @@ static void	take_forks_odd(t_philo *philo)
 	}
 	else
 	{
+		usleep(100);
 		pthread_mutex_lock(philo->left_fork);
 		print_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);

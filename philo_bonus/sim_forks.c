@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 01:42:26 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:57:12 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:37:16 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static void	take_forks_odd(t_philo *philo)
 {
-	if (philo->id == philo->info->n_philos)
-		usleep(10);
+	// if (philo->id == philo->info->n_philos)
+	// 	usleep(10);
+	usleep(50);
 	sem_wait(philo->info->forks);
 	print_action(philo, "has taken a fork");
 	sem_wait(philo->info->forks);

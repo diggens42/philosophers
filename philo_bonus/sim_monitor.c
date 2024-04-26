@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:40:10 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:57:36 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:54:51 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	*full_monitor(void *arg)
 
 	table = (t_table *)arg;
 	philos_full = 0;
-	while (philos_full < table->info.n_philos + 1)
+	while (philos_full < table->info.n_philos)
 	{
 		sem_wait(table->info.full);
 		philos_full++;
@@ -75,7 +75,6 @@ static void	*full_monitor(void *arg)
 	sem_wait(table->info.print);
 	if (philos_full >= table->info.n_philos)
 	{
-		printf("All Philos are full!");
 		i = 0;
 		while (i < table->info.n_philos)
 		{

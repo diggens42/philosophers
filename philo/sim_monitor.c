@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:57:14 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:53:32 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:52:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ static void	check_full(t_table *table)
 	}
 	if (philos_full == table->info.n_philos)
 	{
-		pthread_mutex_lock(&table->info.print);
-		printf("All Philos are full!\n");
-		pthread_mutex_unlock(&table->info.print);
 		pthread_mutex_lock(&table->info.sim);
 		table->info.stop_sim = true;
 		pthread_mutex_unlock(&table->info.sim);

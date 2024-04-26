@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:56:13 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:50:33 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	init_info(t_table *table, char **argv)
 	info->sim = ft_sem_open("sim", 1);
 	info->pid = ft_sem_open("pid", 1);
 	info->start = ft_sem_open("start", 0);
-	info->full = ft_sem_open("full", 1);
+	info->full = ft_sem_open("full", 0);
 	info->print = ft_sem_open("print", 1);
 	info->forks = ft_sem_open("forks", info->n_philos);
 }
