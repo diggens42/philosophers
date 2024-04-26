@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:01:49 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:37:55 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:53:56 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	eat(t_philo *philo)
 	if (philo->is_full == false)
 		if (philo->info->n_meals_to_eat > 0
 			&& philo->n_meals_eaten >= philo->info->n_meals_to_eat)
-				philo->is_full = true;
+			philo->is_full = true;
 	pthread_mutex_unlock(&philo->last_meal);
 	precise_usleep(philo->info->time_to_eat);
 	drop_forks(philo);

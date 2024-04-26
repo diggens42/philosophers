@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:18:22 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 19:05:20 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:54:11 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ void	ft_error(char *error_msg)
 	printf("Error: %s", error_msg);
 	exit(EXIT_FAILURE);
 }
-

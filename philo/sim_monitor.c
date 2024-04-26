@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:57:14 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 21:34:43 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:53:32 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	check_full(t_table *table)
 			philos_full++;
 		pthread_mutex_unlock(&table->philos[i].last_meal);
 		i++;
-
 	}
 	if (philos_full == table->info.n_philos)
 	{

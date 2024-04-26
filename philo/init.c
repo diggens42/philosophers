@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:24:25 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:50:15 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:52:53 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_info(t_table *table, char **argv)
 	}
 }
 
-static void init_last_meal_mutex(t_table *table, int i)
+static void	init_last_meal_mutex(t_table *table, int i)
 {
 	int	j;
 
