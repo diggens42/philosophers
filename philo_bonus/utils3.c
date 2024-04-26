@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:11:01 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/17 01:53:33 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:25:04 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_sem_unlink(void)
 
 	sem_unlink("print");
 	sem_unlink("sim");
+	sem_unlink("pid");
 	sem_unlink("full");
 	sem_unlink("forks");
 	sem_unlink("start");
@@ -42,17 +43,37 @@ void	ft_sem_unlink(void)
 	}
 }
 
+void	ft_sem_close(t_table *table)
+{
+	int		i;
+
+	sem_close(table->info.print);
+	sem_close(table->info.sim);
+	sem_close(table->info.pid);
+	sem_close(table->info.full);
+	sem_close(table->info.forks);
+	sem_close(table->info.start);
+	i = 0;
+	while (i < table->info.n_philos)
+	{
+		sem_close(table->philos[i].last_meal);
+		i++;
+	}
+}
+
 void	print_action(t_philo *philo, char *str)
 {
 	suseconds_t	time;
 
-	sem_wait(philo->info->print);
+	sem_wait(philo->info->sim);
 	if (philo->info->stop_sim == true)
 	{
-		sem_post(philo->info->print);
+		sem_post(philo->info->sim);
 		return ;
 	}
+	sem_post(philo->info->sim);
 	time = get_time_ms() - philo->time_start_routine;
+	sem_wait(philo->info->print);
 	printf("%d Philo %d %s\n", time, philo->id, str);
 	sem_post(philo->info->print);
 }

@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:57:14 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 19:23:15 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 21:34:43 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static void	check_death(t_table *table)
 {
 	int			i;
-	bool		philo_dead;
 	suseconds_t	diff;
 
-	philo_dead = false;
 	i = 0;
 	while (i < table->info.n_philos)
 	{
@@ -46,12 +44,18 @@ static void	check_full(t_table *table)
 	i = 0;
 	while (i < table->info.n_philos)
 	{
+		pthread_mutex_lock(&table->philos[i].last_meal);
 		if (table->philos[i].is_full == true)
 			philos_full++;
+		pthread_mutex_unlock(&table->philos[i].last_meal);
 		i++;
+
 	}
 	if (philos_full == table->info.n_philos)
 	{
+		pthread_mutex_lock(&table->info.print);
+		printf("All Philos are full!\n");
+		pthread_mutex_unlock(&table->info.print);
 		pthread_mutex_lock(&table->info.sim);
 		table->info.stop_sim = true;
 		pthread_mutex_unlock(&table->info.sim);

@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/17 02:07:53 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:40:19 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_info
 	bool			stop_sim;
 	sem_t			*start;
 	sem_t			*sim;
+	sem_t			*pid;
 	sem_t			*full;
 	sem_t			*print;
 	sem_t			*forks;
@@ -72,6 +73,7 @@ void		fork_philo_process(t_table *table);
 void 		wait_philo_process(t_table *table);
 void		start_death_check(t_philo *philo);
 void		start_full_check(t_table *table);
+void		one_philo(t_table *table);
 void		take_forks(t_philo *philo);
 //utils
 bool		ft_isspace(char c);
@@ -83,6 +85,7 @@ size_t		ft_strlcpy(char *dest, const char *src, size_t size);
 size_t		ft_strlcat(char *dest, const char *src, size_t dest_size);
 char		*ft_strdup(const char *s1);
 void		ft_error(char *error_msg);
+void		ft_sem_close(t_table *table);
 void		ft_sem_unlink(void);
 void		print_action(t_philo *philo, char *str);
 void		precise_usleep(long milliseconds);

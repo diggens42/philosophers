@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:13:12 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/23 18:12:38 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:39:54 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void	eat(t_philo *philo)
 {
-	// sem_wait(philo->info->sim);
+	sem_wait(philo->info->sim);
 	if (philo->info->stop_sim)
 	{
-		// sem_post(philo->info->sim);
+		sem_post(philo->info->sim);
 		return ;
 	}
-	// sem_post(philo->info->sim);
+	sem_post(philo->info->sim);
 	take_forks(philo);
 	sem_wait(philo->last_meal);
 	philo->time_last_meal = get_time_ms();
@@ -36,7 +36,7 @@ static void	eat(t_philo *philo)
 
 static void	philo_routine(t_philo *philo)
 {
-	if (philo->id % 2 == 0 && philo->info->n_philos % 2 == 0)
+	if (philo->id % 2 == 0)
 		precise_usleep(10);
 	while (!philo->info->stop_sim)
 	{
@@ -47,6 +47,20 @@ static void	philo_routine(t_philo *philo)
 		precise_usleep(philo->info->time_to_sleep);
 		print_action(philo, "is thinking");
 	}
+}
+
+void	one_philo(t_table *table)
+{
+	t_philo	*philo;
+
+	philo = &table->philos[0];
+	philo->time_last_meal = get_time_ms();
+	philo->time_start_routine = get_time_ms();
+	sem_wait(table->info.forks);
+	print_action(philo, "has taken a fork");
+	precise_usleep(table->info.time_to_die);
+	print_action(philo, "has died");
+	sem_post(table->info.forks);
 }
 
 void	fork_philo_process(t_table *table)
@@ -60,7 +74,9 @@ void	fork_philo_process(t_table *table)
 	while (i < table->info.n_philos)
 	{
 		philo = &table->philos[i];
+		sem_wait(table->info.pid);
 		philo->pid = fork();
+		sem_post(table->info.pid);
 		if (philo->pid == 0)
 		{
 			sem_wait(table->info.start);
@@ -93,7 +109,9 @@ void wait_philo_process(t_table *table)
 		while (i < table->info.n_philos)
 		{
 			philo = &table->philos[i];
+			sem_wait(table->info.pid);
 			kill(philo->pid, SIGTERM);
+			sem_post(table->info.pid);
 			i++;
 		}
 	}

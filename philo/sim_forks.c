@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:03:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 19:16:03 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:23:42 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	take_forks_even(t_philo *philo)
 {
-	// if (philo->id % 2 == 0)
-	// 	usleep(150);
 	pthread_mutex_lock(philo->left_fork);
 	print_action(philo, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
@@ -24,20 +22,19 @@ static void	take_forks_even(t_philo *philo)
 
 static void take_forks_odd(t_philo *philo)
 {
+	usleep(50);
 	if (philo->id == philo->info->n_philos)
-		usleep(10);
-	else if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		print_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
+		print_action(philo, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
 		print_action(philo, "has taken a fork");
 	}
 	else
 	{
-		pthread_mutex_lock(philo->right_fork);
-		print_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
+		print_action(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
 		print_action(philo, "has taken a fork");
 	}
 }
@@ -52,6 +49,6 @@ void	take_forks(t_philo *philo)
 
 void	drop_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
 }

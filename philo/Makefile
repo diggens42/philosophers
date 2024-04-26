@@ -1,7 +1,7 @@
 MANDATORY		= philo
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -pthread -O3
+CFLAGS			= -Wall -Wextra -Werror -pthread -O3 -g
 
 SRC				= main.c check_input.c init.c sim_philo.c sim_monitor.c sim_forks.c utils.c utils2.c
 

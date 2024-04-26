@@ -27,3 +27,4 @@ WORKDIR /mnt
 
 # Command to run Valgrind for memory debugging:
 #   valgrind --leak-check=full ./<program> <argument>
+#	valgrind --tool=helgrind ./<program> <argument>

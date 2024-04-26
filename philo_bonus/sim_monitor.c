@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:40:10 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/23 18:10:11 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:25:00 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	start_death_check(t_philo *philo)
 {
 	pthread_t	deadge;
 
-	deadge = NULL;
 	philo->time_last_meal = get_time_ms();
 	philo->time_start_routine = get_time_ms();
 	if (pthread_create(&deadge, NULL, dead_monitor, philo) != 0)
@@ -68,7 +67,7 @@ static void *full_monitor(void *arg)
 
 	table = (t_table *)arg;
 	philos_full = 0;
-	while (philos_full < table->info.n_philos)
+	while (philos_full < table->info.n_philos + 1)
 	{
 		sem_wait(table->info.full);
 		philos_full++;
@@ -76,11 +75,13 @@ static void *full_monitor(void *arg)
 	sem_wait(table->info.print);
 	if (philos_full >= table->info.n_philos)
 	{
-		// sem_wait(table->info.print);
+		printf("All Philos are full!");
 		i = 0;
 		while (i < table->info.n_philos)
 		{
+			sem_wait(table->info.pid);
 			kill(table->philos[i].pid, SIGTERM);
+			sem_post(table->info.pid);
 			i++;
 		}
 	}
@@ -91,7 +92,6 @@ void	start_full_check(t_table *table)
 {
 	pthread_t	full;
 
-	full = NULL;
 	if (pthread_create(&full, NULL, full_monitor, table) != 0)
 		ft_error("error creating monitor thread");
 	if (pthread_detach(full) != 0)

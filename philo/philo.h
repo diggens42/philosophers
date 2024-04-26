@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:28:59 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 19:18:05 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:37:02 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void		start_philo_threads(t_table *table);
 void		join_philo_threads(t_table *table);
 void		start_monitor_thread(t_table *table);
 void		join_monitor_thread(t_table *table);
+void		one_philo(t_table *table);
 void		take_forks(t_philo *philo);
 void		drop_forks(t_philo *philo);
 

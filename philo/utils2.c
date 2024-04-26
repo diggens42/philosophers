@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 19:36:11 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 19:07:57 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 21:35:00 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ void	print_action(t_philo *philo, char *str)
 {
 	suseconds_t	time;
 
-	pthread_mutex_lock(&philo->info->print);
+	pthread_mutex_lock(&philo->info->sim);
 	if (philo->info->stop_sim == true)
 	{
-		pthread_mutex_unlock(&philo->info->print);
+		pthread_mutex_unlock(&philo->info->sim);
 		return ;
 	}
+	pthread_mutex_unlock(&philo->info->sim);
 	time = get_time_ms() - philo->time_start_routine;
+	pthread_mutex_lock(&philo->info->print);
 	printf("%d Philo %d %s \n", time, philo->id, str);
 	pthread_mutex_unlock(&philo->info->print);
 }

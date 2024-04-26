@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:24:25 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 01:08:26 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:50:15 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,31 @@ static void	init_info(t_table *table, char **argv)
 	}
 }
 
+static void init_last_meal_mutex(t_table *table, int i)
+{
+	int	j;
+
+	j = 0;
+	if (pthread_mutex_init(&table->philos[i].last_meal, NULL) != 0)
+	{
+		while (j < table->info.n_philos)
+		{
+			pthread_mutex_destroy(&table->forks[j].fork);
+			if (j < i)
+				pthread_mutex_destroy(&table->philos[j].last_meal);
+			j++;
+		}
+		pthread_mutex_destroy(&table->info.sim);
+		pthread_mutex_destroy(&table->info.print);
+		ft_error("error last meal mutex init");
+	}
+}
+
 static void	init_philo(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
-	int		j;
 
-	j = 0;
 	i = 0;
 	while (i < table->info.n_philos)
 	{
@@ -58,19 +76,7 @@ static void	init_philo(t_table *table)
 		philo->info = &table->info;
 		philo->left_fork = &table->forks[(i) % table->info.n_philos].fork;
 		philo->right_fork = &table->forks[(i + 1) % table->info.n_philos].fork;
-		if (pthread_mutex_init(&philo->last_meal, NULL) != 0)
-		{
-			while (j < table->info.n_philos)
-			{
-				pthread_mutex_destroy(&table->forks[j].fork);
-				if (j < i)
-					pthread_mutex_destroy(&table->philos[j].last_meal);
-				j++;
-			}
-			pthread_mutex_destroy(&table->info.sim);
-			pthread_mutex_destroy(&table->info.print);
-			ft_error("error last meal mutex init");
-		}
+		init_last_meal_mutex(table, i);
 		i++;
 	}
 }
