@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:40:10 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:25:00 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:57:36 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	check_death(t_philo	*philo)
 	return (false);
 }
 
-static void *dead_monitor(void *arg)
+static void	*dead_monitor(void *arg)
 {
 	t_philo	*philo;
 
@@ -59,7 +59,7 @@ void	start_death_check(t_philo *philo)
 		ft_error("error detaching monitor thread");
 }
 
-static void *full_monitor(void *arg)
+static void	*full_monitor(void *arg)
 {
 	t_table	*table;
 	int		philos_full;
@@ -96,5 +96,4 @@ void	start_full_check(t_table *table)
 		ft_error("error creating monitor thread");
 	if (pthread_detach(full) != 0)
 		ft_error("error detaching monitor thread");
-
 }

@@ -6,18 +6,11 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:11:01 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:25:04 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:02:37 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	ft_error(char *error_msg)
-{
-	ft_sem_unlink();
-	printf("Error: %s", error_msg);
-	exit(EXIT_FAILURE);
-}
 
 void	ft_sem_unlink(void)
 {

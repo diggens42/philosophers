@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:20:48 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:40:19 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:00:58 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <limits.h>
 # include <stdbool.h>
 
-#define PHILOS_MAX 200
+# define PHILOS_MAX 200
 
 typedef struct s_info
 {
@@ -70,10 +70,11 @@ void		check_input(int argc, char **argv);
 void		init(t_table *table, char **argv);
 //simulation
 void		fork_philo_process(t_table *table);
-void 		wait_philo_process(t_table *table);
+void		wait_philo_process(t_table *table);
 void		start_death_check(t_philo *philo);
 void		start_full_check(t_table *table);
 void		one_philo(t_table *table);
+void		synch_philo_starts(t_table *table);
 void		take_forks(t_philo *philo);
 //utils
 bool		ft_isspace(char c);

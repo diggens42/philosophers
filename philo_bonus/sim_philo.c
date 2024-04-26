@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 00:13:12 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:39:54 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 23:02:22 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,13 @@ void	fork_philo_process(t_table *table)
 			ft_error("fork error");
 		i++;
 	}
-	i = 0;
-	while(i < table->info.n_philos)
-	{
-		sem_post(table->info.start);
-		i++;
-	}
+	synch_philo_starts(table);
 }
 
-void wait_philo_process(t_table *table)
+void	wait_philo_process(t_table *table)
 {
 	t_philo	*philo;
-	int 	exit_status;
+	int		exit_status;
 	int		i;
 
 	waitpid(-1, &exit_status, 0);
@@ -116,4 +111,3 @@ void wait_philo_process(t_table *table)
 		}
 	}
 }
-

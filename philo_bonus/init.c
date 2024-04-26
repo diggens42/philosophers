@@ -6,13 +6,13 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:44:30 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/24 21:40:20 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:56:13 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static sem_t *ft_sem_open(char *name, int amount)
+static sem_t	*ft_sem_open(char *name, int amount)
 {
 	sem_t	*sem;
 
@@ -63,7 +63,9 @@ static void	init_philo(t_table *table)
 		philo->n_meals_eaten = 0;
 		philo->info = &table->info;
 		philo->pid = 0;
-		ft_strlcpy(philo->last_meal_name, "last_meal_", sizeof(philo->last_meal_name));
+		ft_strlcpy(philo->last_meal_name,
+			"last_meal_",
+			sizeof(philo->last_meal_name));
 		temp = ft_itoa(philo->id);
 		ft_strlcat(philo->last_meal_name, temp, sizeof(philo->last_meal_name));
 		free(temp);

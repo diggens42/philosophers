@@ -6,13 +6,13 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 01:42:26 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/16 20:13:55 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/04/26 22:57:12 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void take_forks_odd(t_philo *philo)
+static void	take_forks_odd(t_philo *philo)
 {
 	if (philo->id == philo->info->n_philos)
 		usleep(10);
@@ -22,7 +22,7 @@ static void take_forks_odd(t_philo *philo)
 	print_action(philo, "has taken a fork");
 }
 
-static void take_forks_even(t_philo *philo)
+static void	take_forks_even(t_philo *philo)
 {
 	sem_wait(philo->info->forks);
 	print_action(philo, "has taken a fork");
@@ -37,4 +37,3 @@ void	take_forks(t_philo *philo)
 	else
 		take_forks_odd(philo);
 }
-

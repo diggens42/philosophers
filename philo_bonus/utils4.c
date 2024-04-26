@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 21:30:28 by fwahl             #+#    #+#             */
-/*   Updated: 2024/04/26 22:56:27 by fwahl            ###   ########.fr       */
+/*   Created: 2024/04/26 23:00:34 by fwahl             #+#    #+#             */
+/*   Updated: 2024/04/26 23:01:30 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	simulation(t_table *table)
+void	synch_philo_starts(t_table *table)
 {
-	if (table->info.n_philos == 1)
-		one_philo(table);
-	else
+	int	i;
+
+	i = 0;
+	while (i < table->info.n_philos)
 	{
-		fork_philo_process(table);
-		wait_philo_process(table);
+		sem_post(table->info.start);
+		i++;
 	}
 }
 
-int	main(int argc, char **argv)
+void	ft_error(char *error_msg)
 {
-	t_table	table;
-
 	ft_sem_unlink();
-	check_input(argc, argv);
-	init(&table, argv);
-	simulation(&table);
-	ft_sem_close(&table);
-	ft_sem_unlink();
-	return (0);
+	printf("Error: %s", error_msg);
+	exit(EXIT_FAILURE);
 }
